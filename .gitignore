@@ -4,6 +4,8 @@
 .yarn/*
 .yarn
 
+*.code_workspace
+
 .env
 .env.dev
 
