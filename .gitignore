@@ -1,0 +1,14 @@
+# .gitignore
+
+# Ignore Yarn
+.yarn/*
+.yarn
+
+.env
+.env.dev
+
+node_modules
+project-lock.json
+project.json
+
+public/res/app

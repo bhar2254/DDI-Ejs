@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--	navbar.ejs
+
+	For BlaineHarper.com
+	ExpressJS-Bootstrap-Seed, https://ebs.blaineharper.com/
+	by Blaine Harper
+
+	PURPOSE: 
+-->
+<% uri = env.uri %>
+<nav class="navbar navbar-expand-lg bg-plp-black-trans sticky-top shadow-lg">
+	<div class="container-fluid">
+		<button class="my-1 navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<a style="margin-left:10%; position:absolute;" class="navbar-brand hide-on-shrink" href="/home"><%- env.title %></a>
+			<ul class="navbar-nav mx-auto">
+				<li class="nav-item dropdown">	
+					<a class="nav-link dropdown-toggle <% if(env.loc.substring(1,6) == "about"){ %> active <% } %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					About Us</a>
+					<ul class="dropdown-menu">
+						<li><a class="disabled dropdown-item <% if(env.loc == "/about/history"){ %> active <% } %>" href="/about/history">Our History</a></li>
+						<li><a class="disabled dropdown-item <% if(env.loc.substring(6,17) == "/craftsmen"){ %> active <% } %>" href="/about/craftsmen">Our Craftsmen</a></li>
+						<li><a class="dropdown-item <% if(env.loc.substring(6,17) == "/faq"){ %> active <% } %>" href="/about/faq">Your Questions</a></li>
+					</ul>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link <% if(env.loc.substring(0,4) == "/eve"){ %> active <% } %>" href="/events">Events</a>
+				</li>
+				<% if(isAuthenticated){ %>
+					<li class="nav-item dropdown">	
+						<a class="nav-link dropdown-toggle <% if(env.loc.substring(0,4) == "/mem"){ %> active <% } %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Members</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item disabled" href="#">Nothing here yet!</a></li>
+						</ul>
+					</li>
+					<% if(activeUser){ %>
+						<% if(activeUser.intRole > 2){ %>
+							<li class="nav-item dropdown">	
+								<a class="nav-link dropdown-toggle <% if(env.loc.substring(0,4) == "/adm"){ %> active <% } %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								Admin</a>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-header dropdown-item disabled">Outreach</a></li>
+									<li><hr class="dropdown-divider"></li>
+									<li><a class="disabled dropdown-small dropdown-item <% if(env.loc == "/admin/events"){ %> active <% } %>" href="/admin/events">Events</a></li>
+									<li><a class="dropdown-small dropdown-item disabled <% if(env.loc == "/admin/newsletter"){ %> active <% } %>" href="/admin/newsletter">Newsletter</a></li>
+									<li><a class="dropdown-small dropdown-item <% if(env.loc == "/admin/faq"){ %> active <% } %>" href="/admin/faq">FAQ</a></li>
+									<li><hr class="dropdown-divider"></li>
+									<li><a class="dropdown-header dropdown-item disabled">Organization</a></li>
+									<li><hr class="dropdown-divider"></li>
+									<li><a class="dropdown-small dropdown-item <% if(env.loc == "/admin/users"){ %> active <% } %>" href="/admin/users">Accounts</a></li>
+									<li><hr class="dropdown-divider"></li>
+									<li><a class="dropdown-item <% if(env.loc == "/admin/settings"){ %> active <% } %>" href="/admin/settings"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></li>
+								</ul>
+							</li>
+						<% } %>
+					<% } %>
+				<% } %>
+			</ul>
+			<ul class="navbar-nav navbar-right">
+				<% if(isAuthenticated){ %>
+					<li class="nav-item dropdown">	
+						<a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-bell"><span id="notificationBadge" style="font-size:.5rem;" class="position-absolute translate-middle badge rounded-pill bg-danger visually-hidden">0<span class="visually-hidden">unread messages</span></span></i></a>  
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="#">No new notifications...</a></li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<img class="mx-1 mt-1 pt-1 rounded-circle shadow" src="/res/app/photos/profile/<%- activeUser.txtGUID %>.png" style="max-height:2rem; max-width:2rem;">
+					</li>
+					<li class="nav-item">
+						<a class="nav-link <% if(env.loc == "/users/me"){ %> active <% } %>" href="<%- uri %>users/me"><%- activeUser.given_name || "Profile" %></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="<%- uri %>clear">Log Out</a>
+					</li>
+				<% } else { %>
+					<li class="nav-item">
+						<a class="nav-link" href="<%- uri %>login">Log In</a>
+					</li>
+				<% } %>
+			</ul>
+		</div>
+	</div>
+</nav>
+<main class="bg-primary-gradient">
