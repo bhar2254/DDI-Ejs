@@ -65,7 +65,6 @@ router.get('/me',
 						title: `<div>${req.session.activeUser.txtDisplayName}</div>
 							<div class="btn-group" role="group" aria-label="buttons">
 								<a class="btn btn-secondary" href="/users/me/edit">Edit Profile</a>
-								<a class="btn btn-secondary" href="/users/me/roster/edit">Edit Roster</a>
 							</div>`, 
 						content: `</p>
 							<div class="row justify-content-center">
