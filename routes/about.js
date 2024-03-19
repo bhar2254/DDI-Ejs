@@ -31,7 +31,15 @@ router.get('/faq',
 		const query = `SELECT * FROM tblFAQ`
 		data = await queryPromise(query)
 
-		content = [{parallax: {rem:topGap, url:'/res/stock/stage_amplifiers_01.jpg'}, hero : {title:'FAQ', content:'Popular questions about Devil\'s Dive instruments and Harper\'s Guitars.'}}]
+		content = [{
+			parallax: {
+				rem:topGap, 
+				url:'/res/stock/stage_amplifiers_01.jpg'}, 
+				hero : {
+					title:'FAQ', 
+					content:'Popular questions about Devil\'s Dive instruments and Harper\'s Guitars.'
+				}
+			}]
 		for(i=0; i < data.length; i++){
 			content.push({
 				parallax: {
@@ -39,7 +47,8 @@ router.get('/faq',
 					url:'/res/stock/stage_amplifiers_01.jpg'
 				}, 
 				hero : {
-					title:data[i].txtQuery, content:`${data[i].txtResponse}`
+					title:data[i].txtQuery, 
+					content:`${data[i].txtResponse}`
 				}
 			})
 		}

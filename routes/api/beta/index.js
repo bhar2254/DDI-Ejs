@@ -10,7 +10,7 @@ const { isAuthenticated, isAdmin } = require('../../utils/auth')
 const { SQLTables, queryPromise } = require('../../utils/SQLUtils')
 const express = require('express')
 const SparkPost = require('sparkpost') 
-const client = new SparkPost('b786e83569170e613f8e44a3fe49739656ee3d83')
+const client = new SparkPost(process.env.SPARKPOST_SECRET)
 const router = express.Router()
 const dotenv = require('dotenv').config()
 
