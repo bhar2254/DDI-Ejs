@@ -11,7 +11,7 @@
 	DONT SAVE THE DATABASE PASSWORD TO GITHUB
 */	
 
-const mysql = require('mysql')
+const mysql = require('mysql2')
 
 const con = mysql.createConnection({
 	host: process.env.DB_HOST,
