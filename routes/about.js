@@ -335,7 +335,7 @@ router.get('/luthiers',
 		for (const index in chapter_names)
 			chapters[chapter_names[index].chapter_id] = chapter_names[index].name
 
-		const {campus_address} = chapter_names[index]
+		const {campus_address = 'Eagle Rock, MO'} = chapter_names[0]
 
 		// setup the roster navbar by filtering duplicates from each list and sending final object
 		roster_nav = {
