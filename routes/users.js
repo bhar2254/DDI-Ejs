@@ -10,7 +10,7 @@ const path = require('path')
 const fs = require('fs')
 const multer = require("multer")
 const upload = multer({
-	dest: './public/res/default/app/photos/temp',
+	dest: './public/res/app/photos/temp',
 	filename: function (req, file, cb) {
 		cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
 	}
@@ -228,7 +228,7 @@ router.get('/me',
 				content: [{
 					parallax: {
 						rem: profileHeadspace,
-						url: '/res/stock/stage_amplifiers_02.webp'
+						url: '/res/plp/graphics/philamb_flag.png'
 					},
 					hero: {
 						title: `<div>${activeUser.nickname || 'My Profile'}</div>
@@ -303,7 +303,7 @@ router.get('/me/roster/edit',
 			page: {
 				content: [
 					{
-						parallax: { rem: profileHeadspace, url: '/res/stock/stage_amplifiers_02.webp' }, hero: {
+						parallax: { rem: profileHeadspace, url: '/res/plp/graphics/philamb_flag.png' }, hero: {
 							title: `<div>${req.activeUser.datum.nickname}</div>
 					<div class="btn-group" role="group" aria-label="buttons">
 						<a class="btn btn-secondary" href="/users/me">Cancel</a>
@@ -411,7 +411,7 @@ router.post('/photo/upload',
 	requiresAuth(), // check if user is authenticated
 	upload.single('photo'), function (req, res) {
 		const tempPath = req.file.path
-		let targetPath = path.join(__dirname, `../public/res/default/app/photos/profile/${req.activeUser.datum.guid}.webp`)
+		let targetPath = path.join(__dirname, `../public/res/app/photos/profile/${req.activeUser.datum.guid}.webp`)
 		ws = fs.createWriteStream(targetPath)
 		resize(tempPath, 'webp', 500, 500).pipe(ws)
 
@@ -427,7 +427,7 @@ router.post('/photo/upload/bulk',
 
 		Object.keys(req.files.photo).forEach(elem => {
 			tempPath = req.files.photo[elem].path
-			targetPath = path.join(__dirname, `../public/res/default/app/photos/composite/${req.body.chapter_id}/${req.body.year[elem]}/${req.activeUser.datum.guid}.webp`)
+			targetPath = path.join(__dirname, `../public/res/app/photos/composite/${req.body.chapter_id}/${req.body.year[elem]}/${req.activeUser.datum.guid}.webp`)
 			ws = fs.createWriteStream(targetPath)
 			resize(tempPath, 'png', 500, 500).pipe(ws)
 		})
