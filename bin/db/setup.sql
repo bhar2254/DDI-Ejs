@@ -257,6 +257,7 @@ CREATE TABLE `sql_history` (
 --	Table structure and initial values for table `tblEnv`
 --
 
+DROP TABLE IF EXISTS `env`;
 CREATE TABLE `env` (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `guid` VARCHAR(36) NOT NULL DEFAULT (UUID()),
@@ -264,7 +265,6 @@ CREATE TABLE `env` (
     `value` TEXT DEFAULT (''),  -- `txtValue` is now `value`
     `type` TEXT DEFAULT ('')  -- `txtType` is now `type`
 );
-
 INSERT INTO `env` (`key`, `value`, `type`) VALUES
 	("title","Devil's Dive Luthiers","text"),
 	("subtitle","Quality Instruments Made by Hand","text"),
