@@ -8,7 +8,7 @@ module.exports = {
         exec_mode: 'cluster', // Cluster mode for production
         env: {
           NODE_ENV: 'production', // Environment-specific variable for development
-          PORT: 8080, // Port for development
+          PORT: 8087, // Port for development
           LOG_LEVEL: 'error', // Minimal logging
         },
         development: {
@@ -18,7 +18,7 @@ module.exports = {
         },
         production: {
           NODE_ENV: 'production', // Environment-specific variable for production
-          PORT: 8080, // Port for production
+          PORT: 8087, // Port for production
           LOG_LEVEL: 'error', // Minimal logging
         },
       },
