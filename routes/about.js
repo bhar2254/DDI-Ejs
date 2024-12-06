@@ -105,7 +105,7 @@ router.get('/faq',
 		const query = `SELECT * FROM faq`
 		data = await queryPromise(query)
 
-		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: 'FAQ', content: 'Popular questions about Phi Lamb and Fraternity Life.' } }]
+		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: 'FAQ', content: 'Popular questions about Devil\'s Dive and our luthier process.' } }]
 		for (i = 0; i < data.length; i++) {
 			content.push({
 				parallax: {
@@ -145,7 +145,7 @@ router.get('/history',
 					},
 					hero: {
 						title: 'History',
-						content: `From founding in 1969, to reforging in 2002, to celebrating 50 years and beyond of Phi Lamb brotherhood.`
+						content: `Our history of building and enjoying quiality guitars.`
 					}
 				}, {
 					parallax: {
@@ -257,7 +257,7 @@ router.get('/leadership',
 					</div>
 				</div>`
 
-		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span><br>Leadership`, content: `These are the men who lead within Phi Lambda Phi.<br>${buttonBar}` } }]
+		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span><br>Leadership`, content: `These are the men who lead at Devil\'s Dive Luthiers.<br>${buttonBar}` } }]
 
 
 		for (const elem of data) {
@@ -397,7 +397,7 @@ router.get('/luthiers',
 		buttonBar += `</div></nav>`
 
 		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span>
-			<br>Our Luthiers`, content: `These are the men who have shared in the brotherhood of Phi Lambda Phi.<br>${buttonBar}` } }]
+			<br>Our Luthiers`, content: `These are the people who have participated in our history of quality craftsmanship.<br>${buttonBar}` } }]
 
 		const images = []
 		let vp_break = false
