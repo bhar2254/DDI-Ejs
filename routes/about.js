@@ -257,7 +257,7 @@ router.get('/leadership',
 					</div>
 				</div>`
 
-		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span><br>Leadership`, content: `These are the men who lead at Devil\'s Dive Luthiers.<br>${buttonBar}` } }]
+		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span><br>Leadership`, content: `Our leaders at Devil\'s Dive Luthiers.<br>${buttonBar}` } }]
 
 
 		for (const elem of data) {
