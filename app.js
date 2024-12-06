@@ -203,7 +203,7 @@ const checkForAccount = async (oidc) => {
 	const { picture = false, guid = false, email, name } = user.datum
 	if (picture && guid){
 		try {
-			await downloadImage(picture, `./public/res/default/app/photos/profile`, guid);
+			await downloadImage(picture, `./public/res/app/photos/profile`, guid);
 		} catch (err) {
 			console.error('Error downloading image:', err);
 		}
