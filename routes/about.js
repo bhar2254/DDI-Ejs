@@ -290,11 +290,6 @@ router.get('/leadership',
 									</div>
 								</div>
 								<div class="mx-auto col-md-6 col-sm-8 my-auto">
-									Enrollment
-									<div class="lead">
-										${elem.recruit_term || ''} ${elem.recruit_year || 'NA'} - ${elem.grad_year || ''} ${elem.grad_term || 'NA'}
-									</div>
-									<br>
 									${bio}
 								</div>
 							</div>`
