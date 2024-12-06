@@ -14,46 +14,21 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<a style="margin-left:10%; position:absolute;" class="navbar-brand hide-on-shrink" href="/home"><%- env.title %></a>
 			<ul class="navbar-nav mx-auto">
-				<!-- <li class="nav-item dropdown">	
-					<a class="nav-link dropdown-toggle <% if(env.loc.substring(1,5) == "join"){ %> active <% } %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-					Join</a>
-					<ul class="dropdown-menu">
-						<li><a class="dropdown-item <% if(env.loc == "/join/new_chapter"){ %> active <% } %>" href="/join/new_chapter">Start a Chapter</a></li>
-						<li><a class="dropdown-item <% if(env.loc == "/join/new_member"){ %> active <% } %>" href="/join/new_member">Become a Member</a></li>
-					</ul>
-				</li> -->
 				<li class="nav-item dropdown">	
 					<a class="nav-link dropdown-toggle <% if(env.loc.substring(1,6) == "about"){ %> active <% } %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-					About Φ Λ</a>
+					About Us</a>
 					<ul class="dropdown-menu">
 						<!-- <li><a class="dropdown-item <% if(env.loc == "/about/chapters"){ %> active <% } %>" href="/about/chapters">Chapters</a></li>
 						<li><a class="dropdown-item <% if(env.loc == "/about/faq"){ %> active <% } %>" href="/about/faq">FAQ</a></li> -->
 						<li><a class="dropdown-item <% if(env.loc == "/about/history"){ %> active <% } %>" href="/about/history">History</a></li>
 						<li><a class="dropdown-item <% if(env.loc.substring(6,17) == "/leadership"){ %> active <% } %>" href="/about/leadership">Leadership</a></li>
-						<li><a class="dropdown-item <% if(env.loc == "/about/composites"){ %> active <% } %>" href="/about/composites">Composites</a></li>
-					</ul>
-				</li>
-				<li class="nav-item dropdown">	
-					<a class="nav-link dropdown-toggle <% if(env.loc.substring(0,4) == "/inv"){ %> active <% } %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-					Involvement</a>
-					<ul class="dropdown-menu">
-						<li><a class="dropdown-item <% if(env.loc == "/involvement/philanthropy"){ %> active <% } %>" href="/involvement/philanthropy">Philanthropy</a></li>
+						<li><a class="dropdown-item <% if(env.loc == "/about/luthiers"){ %> active <% } %>" href="/about/luthiers">Composites</a></li>
 					</ul>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link <% if(env.loc.substring(0,4) == "/eve"){ %> active <% } %>" href="/events">Events</a>
 				</li>
 				<% if(isAuthenticated){ %>
-					<li class="nav-item dropdown">	
-						<a class="nav-link dropdown-toggle <% if(env.loc.substring(0,4) == "/mem"){ %> active <% } %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Members</a>
-						<ul class="dropdown-menu">
-							<% if(activeUser && activeUser.role > 1){ %>
-								<li><a class="dropdown-item" target="_blank" href="/members/education">Education Binder</a></li>
-								<li><a class="dropdown-item" target="_blank" href="/members/manual">Brotherhood Manual</a></li>
-							<% } %>
-						</ul>
-					</li>
 					<% if(activeUser){ %>
 						<% if(activeUser.role > 2){ %>
 							<li class="nav-item dropdown">	

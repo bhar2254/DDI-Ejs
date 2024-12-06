@@ -269,7 +269,7 @@ INSERT INTO `env` (`key`, `value`, `type`) VALUES
 	("title","Devil's Dive Luthiers","text"),
 	("subtitle","Quality Instruments Made by Hand","text"),
 	("uri","https://devilsdive.net/","text"),
-	("tagline","Building a Better Brotherhood<br>One Man at a Time","text"),
+	("tagline","Building a Better Instrument<br>One at a Time","text"),
 	("orders","[\"Default\",\"Neo-Phi\",\"Lambda\",\"Phi\",\"Alumni\"]","arr"),
 	("inDirectory","[\"Invisible\",\"Name Only\",\"Name+Active Dates\",\"All Info\"]","arr"),
 	("states","[\"AL\",\"AK\",\"AS\",\"AZ\",\"AR\",\"CA\",\"CO\",\"CT\",\"DE\",\"DC\",\"FM\",\"FL\",\"GA\",\"GU\",\"HI\",\"ID\",\"IL\",\"IN\",\"IA\",\"KS\",\"KY\",\"LA\",\"ME\",\"MH\",\"MD\",\"MA\",\"MI\",\"MN\",\"MS\",\"MO\",\"MT\",\"NE\",\"NV\",\"NH\",\"NJ\",\"NM\",\"NY\",\"NC\",\"ND\",\"MP\",\"OH\",\"OK\",\"OR\",\"PW\",\"PA\",\"PR\",\"RI\",\"SC\",\"SD\",\"TN\",\"TX\",\"UT\",\"VT\",\"VI\",\"VA\",\"WA\",\"WV\",\"WI\",\"WY\"]","arr"),
