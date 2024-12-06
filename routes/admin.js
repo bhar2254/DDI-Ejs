@@ -115,7 +115,7 @@ router.get('/',
 					{		
 						parallax: {
 							rem:'15', 
-							url:'res/stock/stage_amplifiers_02.webp'
+							url:'/res/plp/graphics/philamb_flag.png'
 						}, 
 						hero:{
 							title:'Admin Center', 
@@ -1174,7 +1174,7 @@ router.get('/settings',
 		content.push({
 			parallax: {
 				rem:10, 
-				url:'res/stock/stage_amplifiers_02.webp'
+				url:'/res/plp/graphics/philamb_flag.png'
 			}, 
 			hero : {
 				title:`<div>Settings</div>`, 

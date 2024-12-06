@@ -228,7 +228,7 @@ router.get('/me',
 				content: [{
 					parallax: {
 						rem: profileHeadspace,
-						url: '/res/stock/stage_amplifiers_01.jpg'
+						url: '/res/plp/graphics/philamb_flag.png'
 					},
 					hero: {
 						title: `<div>${activeUser.nickname || 'My Profile'}</div>
@@ -303,7 +303,7 @@ router.get('/me/roster/edit',
 			page: {
 				content: [
 					{
-						parallax: { rem: profileHeadspace, url: '/res/stock/stage_amplifiers_01.jpg' }, hero: {
+						parallax: { rem: profileHeadspace, url: '/res/plp/graphics/philamb_flag.png' }, hero: {
 							title: `<div>${req.activeUser.datum.nickname}</div>
 					<div class="btn-group" role="group" aria-label="buttons">
 						<a class="btn btn-secondary" href="/users/me">Cancel</a>
@@ -386,7 +386,7 @@ router.post('/me/roster/edit',
 	requiresAuth(), // check if user is authenticated
 	async (req, res, next) => {
 		const chapter_id = req.body.chapter_id
-		delete req.body['chapter']
+		delete req.body['txtChapter']
 		const intRosterRows = Math.floor(Object.keys(req.body).length / 2)
 		let objRoster = {}
 		let insertQuery = 'INSERT INTO roster (year,chapter_id,title,user_id) VALUES '
