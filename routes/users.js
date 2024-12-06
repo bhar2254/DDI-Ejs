@@ -228,7 +228,7 @@ router.get('/me',
 				content: [{
 					parallax: {
 						rem: profileHeadspace,
-						url: '/res/plp/graphics/philamb_flag.png'
+						url: '/res/stock/stage_amplifiers_02.webp'
 					},
 					hero: {
 						title: `<div>${activeUser.nickname || 'My Profile'}</div>
@@ -303,7 +303,7 @@ router.get('/me/roster/edit',
 			page: {
 				content: [
 					{
-						parallax: { rem: profileHeadspace, url: '/res/plp/graphics/philamb_flag.png' }, hero: {
+						parallax: { rem: profileHeadspace, url: '/res/stock/stage_amplifiers_02.webp' }, hero: {
 							title: `<div>${req.activeUser.datum.nickname}</div>
 					<div class="btn-group" role="group" aria-label="buttons">
 						<a class="btn btn-secondary" href="/users/me">Cancel</a>

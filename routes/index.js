@@ -33,9 +33,9 @@ router.get('/home', isAuthenticated,
 			activeUser: req.activeUser || {},
 			title:'Home', page:{
 			content: [
-				{parallax: {rem:'26', url:'res/plp/brothers/brothers_2022_small.jpg'}, hero : {title:'Phi Lambda Phi', content:req.env.tagline}},
-				{parallax: {rem:'30', url:'res/plp/brothers/brothers_2020_small.jpg'}, hero : {title:'Our Mission', content:'Phi Lambda Phi is a National Fraternity founded on the campus of Truman State University in June of 2002. Phi Lambda prides itself on being the first organization on campus to abolish hazing. With this act, it has created an environment of inclusion and acceptance. Phi Lambda strives to provide an environment that fosters lifelong relationships, as well as academic excellence. The structure of the organization allows for deep and rich connections with every brother in the fraternity. Phi Lamb also has an extremely active alumni association that offers support and guidance from multiple generations of brothers. Phi Lambda has supported philanthropies that include but are not limited to: The Foodbank of Northeast and Central Missouri and The Adair County Humane Society. Giving back to the community that has given so much to Phi Lambda is one of the hallmarks of the organization and they strive to maintain it every semester.'}},
-				{parallax: {rem:'30', url:'res/plp/brothers/brothers_2015_full.jpg'}, hero : {title:'Our History', content:'Founded in 2002 when local brothers felt that their chapter was heading in a different direction than the PLX National Board. With the help of Doc Murray, brothers were able to found a new organization keeping the Phi Lamb roots, but staying true to the values and principles of<br>Phi Lambda Phi.'}}
+				{parallax: {rem:'26', url:'res/stock/stage_amplifiers_01.jpg'}, hero : {title: req.env.title, content: req.env.tagline}},
+				{parallax: {rem:'30', url:'res/stock/stage_amplifiers_03.jpeg'}, hero : {title:'Our Mission', content:'We believe that quality instrument\'s should not be reserved to elite professionals or rich millionaires. Quality instruments should be available to anyone with the desire to practice or to play. We believe that crastment should share their experiences with the greater community and make building as accessible to the population as possible.'}},
+				{parallax: {rem:'30', url:'res/stock/stage_amplifiers_02.webp'}, hero : {title:'Our History', content:'Guitars have always been in our family, and so we\'re born with a passion for music and craftsmenship. '}}
 			]
 		}
 	})
