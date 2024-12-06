@@ -10,7 +10,7 @@
 //	Make sure to leave the password value null 
 //	DONT SAVE THE DATABASE PASSWORD TO GITHUB
 
-const mysql = require('mysql')
+const mysql = require('mysql2')
 
 const con = mysql.createConnection({
 	host: DB_HOST,
