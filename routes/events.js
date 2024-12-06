@@ -30,7 +30,7 @@ router.get('/',
 		content = [{
 			parallax: {
 				rem:'10', 
-				url:'/res/plp/graphics/philamb_flag.png'
+				url:'/res/stock/stage_amplifiers_02.webp'
 			}, 
 			hero : {
 				title:'Upcoming Events', 
@@ -47,7 +47,7 @@ router.get('/',
 		content.push({
 			parallax: {
 				rem:'10', 
-				url:'/res/plp/graphics/philamb_flag.png'
+				url:'/res/stock/stage_amplifiers_02.webp'
 			}, 
 			hero : {
 				title:'Recent Events', 

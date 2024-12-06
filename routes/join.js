@@ -23,7 +23,7 @@ router.get('/new_chapter',
 			isAuthenticated: req.oidc.isAuthenticated(),  
 			activeUser: req.activeUser,
 			title: 'Start a Chapter', subtitle:'', page: { content: [
-				{parallax: {rem:topGap, url:'/res/plp/graphics/philamb_flag.png'}, hero : {title:'Start a Chapter', content:'Phi Lambda Phi is always looking to expand and branch out to other campuses. If your campus is in need of strong brotherhood, scholardship, and leadership, reach out to us at:<br><a class="my-3" href="mailto:charter@philamb.info">charter@philamb.info</a>'}}
+				{parallax: {rem:topGap, url:'/res/stock/stage_amplifiers_02.webp'}, hero : {title:'Start a Chapter', content:'Phi Lambda Phi is always looking to expand and branch out to other campuses. If your campus is in need of strong brotherhood, scholardship, and leadership, reach out to us at:<br><a class="my-3" href="mailto:charter@philamb.info">charter@philamb.info</a>'}}
 			]}
 		})
 	}
@@ -40,7 +40,7 @@ router.get('/new_member',
 			title: 'Become a Brother', 
 			subtitle:'', 
 			page: { content: [
-				{parallax: {rem:topGap, url:'/res/plp/graphics/philamb_flag.png'}, hero : {title:'Become a Brother', content:'Do you value scholastic achievement, building lasting relationships, and experiencing new leadership opportunities? Reach out to us at: <a class="my-3" href="mailto:recruitment@philamb.info">recruitment@philamb.info</a> or visit our social media to get connected with what\'s happening at<br>Phi Lamb!<div class="my-3"><a href="https://philamb.info/fb"><i class="fa-brands fa-facebook mx-2" style="font-size:xx-large;"></i><a href="https://philamb.info/insta"><i class="fa-brands fa-instagram mx-2" style="font-size:xx-large;"></i></div>'}}
+				{parallax: {rem:topGap, url:'/res/stock/stage_amplifiers_02.webp'}, hero : {title:'Become a Brother', content:'Do you value scholastic achievement, building lasting relationships, and experiencing new leadership opportunities? Reach out to us at: <a class="my-3" href="mailto:recruitment@philamb.info">recruitment@philamb.info</a> or visit our social media to get connected with what\'s happening at<br>Phi Lamb!<div class="my-3"><a href="https://philamb.info/fb"><i class="fa-brands fa-facebook mx-2" style="font-size:xx-large;"></i><a href="https://philamb.info/insta"><i class="fa-brands fa-instagram mx-2" style="font-size:xx-large;"></i></div>'}}
 			]}
 		})
 	}

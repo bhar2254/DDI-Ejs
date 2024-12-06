@@ -29,7 +29,7 @@ router.get('/chapters',
 			{
 				parallax: {
 					rem: topGap,
-					url: '/res/plp/graphics/philamb_flag.png'
+					url: '/res/stock/stage_amplifiers_02.webp'
 				},
 				hero: {
 					title: 'Chapters',
@@ -42,7 +42,7 @@ router.get('/chapters',
 				content.push({
 					parallax: {
 						rem: '17',
-						url: '/res/plp/graphics/philamb_flag.png'
+						url: '/res/stock/stage_amplifiers_02.webp'
 					},
 					hero: {
 						title: data[i].txtName + ` Chapter`,
@@ -69,7 +69,7 @@ router.get('/chapters',
 				content.push({
 					parallax: {
 						rem: '17',
-						url: '/res/plp/graphics/philamb_flag.png'
+						url: '/res/stock/stage_amplifiers_02.webp'
 					},
 					hero: {
 						title: data[i].txtName + ` Chapter`,
@@ -80,7 +80,7 @@ router.get('/chapters',
 				content.push({
 					parallax: {
 						rem: '17',
-						url: '/res/plp/graphics/philamb_flag.png'
+						url: '/res/stock/stage_amplifiers_02.webp'
 					},
 					hero: {
 						title: data[i].txtName + ` Chapter`, content: `<div class='row'><div class='col my-auto'>${data[i].txtDesc}<br><br><b>President</b> | PLACEHOLDER <br><br><b>Local Address</b> | ${data[i].txtAddress}</div><div class='col'><div class="embed-responsive embed-responsive-1by1"><iframe src="${data[i].txtMapEmbed}" style="border:0; height:20rem; width:100%;" loading="lazy", referrerpolicy="no-referrer-when-downgrade"></iframe></div></div></div><span id='${data[i + 1].txtName}'></span>`
@@ -105,12 +105,12 @@ router.get('/faq',
 		const query = `SELECT * FROM faq`
 		data = await queryPromise(query)
 
-		content = [{ parallax: { rem: topGap, url: '/res/plp/graphics/philamb_flag.png' }, hero: { title: 'FAQ', content: 'Popular questions about Phi Lamb and Fraternity Life.' } }]
+		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: 'FAQ', content: 'Popular questions about Phi Lamb and Fraternity Life.' } }]
 		for (i = 0; i < data.length; i++) {
 			content.push({
 				parallax: {
 					rem: '10',
-					url: '/res/plp/graphics/philamb_flag.png'
+					url: '/res/stock/stage_amplifiers_02.webp'
 				},
 				hero: {
 					title: data[i].query, content: `${data[i].txtResponse}`
@@ -141,7 +141,7 @@ router.get('/history',
 				content: [{
 					parallax: {
 						rem: topGap,
-						url: '/res/plp/graphics/philamb_flag.png'
+						url: '/res/stock/stage_amplifiers_02.webp'
 					},
 					hero: {
 						title: 'History',
@@ -150,7 +150,7 @@ router.get('/history',
 				}, {
 					parallax: {
 						rem: '10',
-						url: '/res/plp/graphics/philamb_flag.png'
+						url: '/res/stock/stage_amplifiers_02.webp'
 					},
 					hero: {
 						title: 'Timeline',
@@ -257,7 +257,7 @@ router.get('/leadership',
 					</div>
 				</div>`
 
-		content = [{ parallax: { rem: topGap, url: '/res/plp/graphics/philamb_flag.png' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span><br>Leadership`, content: `These are the men who lead within Phi Lambda Phi.<br>${buttonBar}` } }]
+		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span><br>Leadership`, content: `These are the men who lead within Phi Lambda Phi.<br>${buttonBar}` } }]
 
 
 		for (const elem of data) {
@@ -272,7 +272,7 @@ router.get('/leadership',
 				content.push({
 					parallax: {
 						rem: '7',
-						url: '/res/plp/graphics/philamb_flag.png'
+						url: '/res/stock/stage_amplifiers_02.webp'
 					}, hero: {
 						title: `
 							<span class="text-muted" style="font-size:2rem;">${elem.title}</span>  
@@ -401,7 +401,7 @@ router.get('/composites',
 		})
 		buttonBar += `</div></nav>`
 
-		content = [{ parallax: { rem: topGap, url: '/res/plp/graphics/philamb_flag.png' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span><br>Composites`, content: `These are the men who have shared in the brotherhood of Phi Lambda Phi.<br>${buttonBar}` } }]
+		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span><br>Composites`, content: `These are the men who have shared in the brotherhood of Phi Lambda Phi.<br>${buttonBar}` } }]
 
 		const images = []
 		let vp_break = false
@@ -448,7 +448,7 @@ router.get('/composites',
 		content.push({
 			parallax: {
 				rem: '7',
-				url: '/res/plp/graphics/philamb_flag.png'
+				url: '/res/stock/stage_amplifiers_02.webp'
 			}, hero: {
 				title: `
 					<span class="text-muted" style="font-size:2rem;">Phi Lambda Phi</span>

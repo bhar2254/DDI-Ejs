@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--	footer.ejs
+
+	For Indian Hills Community College
+	Parking On Hills, https://parking.indianhils.edu
+	by Blaine Harper
+
+	PURPOSE: Footer for Parking UI
+--><!-- Footer -->
+</main>
+<footer class="text-center bg-dark text-lg-start text-muted">
+	<section class="d-flex justify-content-center justify-content-lg-between p-3 border-bottom">
+		<div class="me-5 d-none d-lg-block"   style="color:var(--plp-gold);">
+			<span>Get connected with us on social networks:</span>
+		</div>
+		<div   style="color:var(--plp-light-blue);">
+			<a href="https://philamb.info/fb" class="me-4 text-reset"><i class="fab fa-facebook"></i></a>
+			<a href="https://philamb.info/insta" class="me-4 text-reset"><i class="fab fa-instagram"></i></a>
+			<a href="https://philamb.info/r" class="me-4 text-reset"><i class="fab fa-reddit"></i></a>
+			<a href="https://philamb.info/gh" class="me-4 text-reset"><i class="fab fa-github"></i></a>
+		</div>
+	</section>
+	<section class="">
+		<div class="m-5">
+			<div class="row">
+				<div class="col-md-3 col-sm-12 mx-auto">
+					<h6 class="text-uppercase fw-bold"><%- env.title %></h6>
+					<p><%- env.tagline %></p>
+					<p>Est. nat. '02 / loc. '69</p>
+				</div>
+				<div class="col-md-3 col-sm-12 mx-auto mb-md-0">
+					<h6 class="text-uppercase fw-bold">Contact</h6>
+					<p><i class="fas fa-envelope me-3"></i>contact_us@philamb.info</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.25);">
+		<a class="fw-bold" href="https://philambdaphi.org"><%- env.title %> | <%- env.subtitle %></a><br> © <%= new Date().getFullYear() %> Copyright
+	</div>
+</footer>
+	<button class='btn bg-plp-light rounded-circle'onclick="topFunction()" id="topButton" title="Go to top">Top</button>
+	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.7.0.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+	<script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-colvis-2.4.1/b-html5-2.4.1/cr-1.7.0/r-2.5.0/rr-1.4.1/sc-2.2.0/sb-1.5.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
+
+	<script src="https://kit.fontawesome.com/5496aaa581.js" crossorigin="anonymous"></script>
+
+	<script src="/js/formToggler.js" crossorigin="anonymous"></script>
+	<script src="/js/slider.js"></script>
+	<script>
+		// Get the button
+		let buttonToTop = document.getElementById("topButton")
+
+		// When the user scrolls down 20px from the top of the document, show the button
+		window.onscroll = function(){scrollFunction()}
+
+		function scrollFunction(){
+			if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20){
+				buttonToTop.style.display = "block"
+			} else {
+				buttonToTop.style.display = "none"
+			}
+		}
+
+		// When the user clicks on the button, scroll to the top of the document
+		function topFunction(){
+			document.body.scrollTop = 0
+			document.documentElement.scrollTop = 0
+		}
+		
+		window.addEventListener("load", (event) => {
+			$('.toast').toast()
+		})
+	</script>
+</body>
+</html>
