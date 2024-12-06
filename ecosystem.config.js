@@ -1,7 +1,7 @@
 module.exports = {
     apps: [
       {
-        name: 'ddi-ejs', // Name of the app
+        name: 'devils-dive', // Name of the app
         script: './app.js', // Path to your entry script
         instances: 'max', // Scales the app to maximum CPU cores in production
         max_restarts: 5, //Here you can define your max restarts

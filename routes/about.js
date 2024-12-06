@@ -33,7 +33,7 @@ router.get('/chapters',
 				},
 				hero: {
 					title: 'Chapters',
-					content: 'Phi Lambda Phi has one active chapter located in Kirksville, MO at Truman State University.<br>' + buttonBar
+					content: 'Devil\'s Dive Luthiers have one active chapter located in Eagle Rock, MO.<br>' + buttonBar
 				}
 			}
 		]
@@ -167,7 +167,7 @@ router.get('/leadership',
 	async (req, res, next) => {
 		const url_query = req.query
 		const default_query = {
-			year: '2019',
+			year: '2024',
 			chapter: '2'
 		}
 		const output_query = {
@@ -313,12 +313,12 @@ router.get('/leadership',
 )
 
 /* GET leadership page. */
-router.get('/composites',
+router.get('/luthiers',
 	isAuthenticated,
 	async (req, res, next) => {
 		const url_query = req.query
 		const default_query = {
-			year: '2019',
+			year: '2024',
 			chapter: '2'
 		}
 		const output_query = {
@@ -390,7 +390,7 @@ router.get('/composites',
 			for (i = 0; i < roster_nav_obj[chapter].length; i++) {
 				buttonBar += `
 						<li>
-							<a style="text-align:center;" href="/about/composites?chapter=${chapter}&amp;year=${roster_nav_obj[chapter][i]}" class="nav-link ">
+							<a style="text-align:center;" href="/about/luthiers?chapter=${chapter}&amp;year=${roster_nav_obj[chapter][i]}" class="nav-link ">
 								${roster_nav_obj[chapter][i]}
 							</a>
 						</li>`;
@@ -401,7 +401,8 @@ router.get('/composites',
 		})
 		buttonBar += `</div></nav>`
 
-		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span><br>Composites`, content: `These are the men who have shared in the brotherhood of Phi Lambda Phi.<br>${buttonBar}` } }]
+		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span>
+			<br>Our Luthiers`, content: `These are the men who have shared in the brotherhood of Phi Lambda Phi.<br>${buttonBar}` } }]
 
 		const images = []
 		let vp_break = false
@@ -451,8 +452,8 @@ router.get('/composites',
 				url: '/res/stock/stage_amplifiers_02.webp'
 			}, hero: {
 				title: `
-					<span class="text-muted" style="font-size:2rem;">Phi Lambda Phi</span>
-					<div class="lead">Truman State University</div>`,
+					<span class="text-muted" style="font-size:2rem;">Devil's Dive Luthiers</span>
+					<div class="lead">Eagle Rock, MO / Gravette, AR</div>`,
 				content: `<div class="row">
 						<div class="mx-auto col-2">
 							<div class="form-check form-switch">
@@ -468,7 +469,7 @@ router.get('/composites',
 			env: req.env,
 			isAuthenticated: req.oidc.isAuthenticated(),
 			activeUser: req.activeUser,
-			title: 'Composites',
+			title: 'Our Luthiers',
 			page: { content: content }
 		})
 	}

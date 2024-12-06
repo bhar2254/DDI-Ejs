@@ -19,8 +19,8 @@ INSERT INTO `users` (`username`,`name`,`role`,`bio`,`email`,`phone`,`in_director
 
 INSERT INTO `chapters` (`name`,`nickname`,`address`,`email`,`description`,`campus`,`campus_address`,`map_link`) VALUES 
 	('Alumni','Alumni','','alumni@philambdaphi.org','Our alumni chapter was founded in 1969 with the founding of Lambda Chapter of Phi Lambda Chi.','','','https://lambdaalumniassociation.org/'),
-	('Alpha','Alpha','610 S. Osteopathy Kirksville, MO','alpha@philambdaphi.org','Alpha chapter was founded on the campus of Truman State University by then brothers of Phi Lambda Chi in 2002. Alpha chapter is currently the only active chapter.','Truman State University','100 S. Normal Kirksville, MO','https://lambdaalumniassociation.org/'),
-	('Beta','Beta','NA','beta@philambdaphi.org','Beta chapter was founded on the campus of Lindenwood University. Beta chapter is no longer affiliated with Phi Lambda Phi.','Lindenwood University','209 S Kingshighway St, St Charles, MO 63301','https://lambdaalumniassociation.org/');
+	('Eagle Rock',"Devil\'s Dive",'Eagle Rock, MO','alpha@devilsdive.net','Alpha chapter was founded at Eagle Rock in Missouri','Devil\'s Dive Main Campus','Eagle Rock, MO','https://devilsdive.net/'),
+	('Gravette','Gravette','Gravette, AR','beta@devilsdive.net','Beta chapter was founded at Gravette in Arkansas','Gravette Campus','Gravette, AR','https://devilsdive.net/');
 	
 --
 -- Sample data for table `roster`
