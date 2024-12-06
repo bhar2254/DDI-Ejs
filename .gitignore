@@ -4,10 +4,8 @@
 .yarn/*
 .yarn
 
-*.code_workspace
-
-.env
-.env.dev
+./*.code_workspace
+.env.*
 
 node_modules
 project-lock.json
@@ -15,3 +13,4 @@ project.json
 
 public/res/app
 Devils-Dive-Ejs.code-workspace
+DDI-Ejs.code-workspace
