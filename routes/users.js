@@ -111,7 +111,7 @@ const generateProfileCard = (profileData, rosterData) => {
 						Nickname
 						<div class="text-muted"><span class="editable" id="nickname">${_profileData.nickname}</span></div>
 						Email
-						<div class="text-muted"><span class="editable" id="email" type="email">${_profileData.email.length ? _profileData.email : 'No E-mail'}</span></div>
+						<div class="text-muted">${_profileData.email.length ? _profileData.email : 'No E-mail'}</div>
 						<hr>Enrollment
 						<div class="text-muted">
 							<span class="editable" id="recruit_term" ${term_options}>${_profileData.recruit_term}</span>
@@ -228,7 +228,7 @@ router.get('/me',
 				content: [{
 					parallax: {
 						rem: profileHeadspace,
-						url: '/res/stock/stage_amplifiers_02.webp'
+						url: '/res/plp/graphics/philamb_flag.png'
 					},
 					hero: {
 						title: `<div>${activeUser.nickname || 'My Profile'}</div>
@@ -303,7 +303,7 @@ router.get('/me/roster/edit',
 			page: {
 				content: [
 					{
-						parallax: { rem: profileHeadspace, url: '/res/stock/stage_amplifiers_02.webp' }, hero: {
+						parallax: { rem: profileHeadspace, url: '/res/plp/graphics/philamb_flag.png' }, hero: {
 							title: `<div>${req.activeUser.datum.nickname}</div>
 					<div class="btn-group" role="group" aria-label="buttons">
 						<a class="btn btn-secondary" href="/users/me">Cancel</a>
