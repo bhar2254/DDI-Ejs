@@ -2,63 +2,128 @@
 	by Blaine Harper
 
 	PURPOSE: router for about us UI interactions
-*/	
+*/
 
 const express = require('express')
 const router = express.Router()
-require('dotenv').config()
-const {isAuthenticated, needsAuthenticated, isAdmin} = require('./utils/auth')
-const {queryPromise} = require('./utils/SQLUtils')
+const { isAuthenticated } = require('./utils/auth')
+const { titleToRanking } = require('./utils/@bhar2254/frat-cms-handler')
+const { queryPromise } = require('@bhar2254/mysql')
 
 topGap = '15'
 
-const titleToRanking = (title) => {
-	const titles = [
-		'mas',
-		'jou',
-		'app',
-		'nov'
-	]
-	title = title.substring(0,3).toLowerCase().padEnd(3, ' ')
-	const position = titles.indexOf(title)
-	return position >= 0 ? position : titles.length 
-}
+/* GET chapters page. */
+router.get('/chapters',
+	isAuthenticated,
+	async (req, res, next) => {
+		const query = `SELECT * FROM chapters`
+
+		data = await queryPromise(query)
+
+		buttonBar = '<div id="Alumni" class="my-3 btn-group" role="group" aria-label="chapter_buttons">'
+		for (i = 0; i < data.length; i++)
+			buttonBar += `<a class="btn btn-secondary" href="#${data[i].txtName}">${data[i].txtName}</a>`
+
+		buttonBar += '</div>'
+		content = [
+			{
+				parallax: {
+					rem: topGap,
+					url: '/res/plp/graphics/philamb_flag.png'
+				},
+				hero: {
+					title: 'Chapters',
+					content: 'Phi Lambda Phi has one active chapter located in Kirksville, MO at Truman State University.<br>' + buttonBar
+				}
+			}
+		]
+		for (i = 0; i < data.length; i++) {
+			if (data[i].txtName == 'Alumni') {
+				content.push({
+					parallax: {
+						rem: '17',
+						url: '/res/plp/graphics/philamb_flag.png'
+					},
+					hero: {
+						title: data[i].txtName + ` Chapter`,
+						content: `
+							<div class='row' id='${data[i].txtName}'>
+								<script>
+									addEventListener("load", (event) => {
+										$('html, body').animate({
+											scrollTop: $("#${req.query.chapter}").offset().top
+										}, 2000)
+									})
+								</script>
+								<div class='col my-auto'>
+									${data[i].txtDesc}
+									<br><br>
+									<b>President</b> | PLACEHOLDER
+								</div>
+							</div>
+							<span id='${data[i + 1].txtName}'></span>
+						`
+					}
+				})
+			} else if (i == data.length - 1) {
+				content.push({
+					parallax: {
+						rem: '17',
+						url: '/res/plp/graphics/philamb_flag.png'
+					},
+					hero: {
+						title: data[i].txtName + ` Chapter`,
+						content: `<div class='row'><div class='col my-auto'>${data[i].txtDesc}<br><br><b>President</b> | PLACEHOLDER <br><br><b>Local Address</b> | ${data[i].txtAddress}</div><div class='col'><div class="embed-responsive embed-responsive-1by1"><iframe src="${data[i].txtMapEmbed}" style="border:0; height:20rem; width:100%;" loading="lazy", referrerpolicy="no-referrer-when-downgrade"></iframe></div></div></div>`
+					}
+				})
+			} else {
+				content.push({
+					parallax: {
+						rem: '17',
+						url: '/res/plp/graphics/philamb_flag.png'
+					},
+					hero: {
+						title: data[i].txtName + ` Chapter`, content: `<div class='row'><div class='col my-auto'>${data[i].txtDesc}<br><br><b>President</b> | PLACEHOLDER <br><br><b>Local Address</b> | ${data[i].txtAddress}</div><div class='col'><div class="embed-responsive embed-responsive-1by1"><iframe src="${data[i].txtMapEmbed}" style="border:0; height:20rem; width:100%;" loading="lazy", referrerpolicy="no-referrer-when-downgrade"></iframe></div></div></div><span id='${data[i + 1].txtName}'></span>`
+					}
+				})
+			}
+		}
+		res.render('pages/basicText', {
+			env: req.env,
+			isAuthenticated: req.oidc.isAuthenticated(),
+			activeUser: req.activeUser,
+			title: 'Chapters',
+			page: { content: content }
+		})
+	}
+)
 
 /* GET faq page. */
 router.get('/faq',
 	isAuthenticated,
 	async (req, res, next) => {
-		const query = `SELECT * FROM tblFAQ`
+		const query = `SELECT * FROM faq`
 		data = await queryPromise(query)
 
-		content = [{
-			parallax: {
-				rem: topGap, 
-				url:'/res/stock/stage_amplifiers_01.jpg'}, 
-				hero : {
-					title:'FAQ', 
-					content:'Popular questions about Devil\'s Dive instruments and Harper\'s Guitars.'
-				}
-			}]
-		for(i=0; i < data.length; i++){
+		content = [{ parallax: { rem: topGap, url: '/res/plp/graphics/philamb_flag.png' }, hero: { title: 'FAQ', content: 'Popular questions about Phi Lamb and Fraternity Life.' } }]
+		for (i = 0; i < data.length; i++) {
 			content.push({
 				parallax: {
-					rem:'10', 
-					url:'/res/stock/stage_amplifiers_01.jpg'
-				}, 
-				hero : {
-					title:data[i].txtQuery, 
-					content:`${data[i].txtResponse}`
+					rem: '10',
+					url: '/res/plp/graphics/philamb_flag.png'
+				},
+				hero: {
+					title: data[i].query, content: `${data[i].txtResponse}`
 				}
 			})
 		}
 
-		res.render('pages/basicText', { 
-			env: req.env, 
-			isAuthenticated: req.oidc.isAuthenticated(), 
-			activeUser: req.session.activeUser,
-			title:'FAQ', 
-			page:{content: content}
+		res.render('pages/basicText', {
+			env: req.env,
+			isAuthenticated: req.oidc.isAuthenticated(),
+			activeUser: req.activeUser,
+			title: 'FAQ',
+			page: { content: content }
 		})
 	}
 )
@@ -66,40 +131,40 @@ router.get('/faq',
 /* GET history page. */
 router.get('/history',
 	isAuthenticated,
-	function(req, res, next){
-	res.render('pages/basicText', { 
-		env: req.env, 
-		isAuthenticated: req.oidc.isAuthenticated(), 
-		activeUser: req.session.activeUser,
-		title:'History', 
-		page:{
-			content: [{
-				parallax: {
-					rem:topGap, 
-					url:'/res/stock/stage_amplifiers_01.jpg'
-				}, 
-				hero : {
-					title:'Our History', 
-					content:`We've been interested in building instruments as long as we've been playing. Longer for some of us. Now that we've had some practice building guitars and eons of practice (or at least it feels like it) practicing scales, we want to share our creations with the world and hopefully bring the Harper sound to your home.`
-				}
-			},{
-				parallax: {
-					rem:'10', 
-					url:'/res/stock/stage_amplifiers_01.jpg'
-				}, 
-				hero : {
-					title:'Timeline', 
-					content:`<iframe src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1MJaDzskNiVn5lPTwtAdwsclfgibALj3UxLZYUUUZz8Y&font=Default&lang=en&initial_zoom=2&height=650' width='100%' height='650' webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder='0'></iframe>`
-				}
-			}]
-		}
+	function (req, res, next) {
+		res.render('pages/basicText', {
+			env: req.env,
+			isAuthenticated: req.oidc.isAuthenticated(),
+			activeUser: req.activeUser,
+			title: 'History',
+			page: {
+				content: [{
+					parallax: {
+						rem: topGap,
+						url: '/res/plp/graphics/philamb_flag.png'
+					},
+					hero: {
+						title: 'History',
+						content: `From founding in 1969, to reforging in 2002, to celebrating 50 years and beyond of Phi Lamb brotherhood.`
+					}
+				}, {
+					parallax: {
+						rem: '10',
+						url: '/res/plp/graphics/philamb_flag.png'
+					},
+					hero: {
+						title: 'Timeline',
+						content: `<iframe src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1MJaDzskNiVn5lPTwtAdwsclfgibALj3UxLZYUUUZz8Y&font=Default&lang=en&initial_zoom=2&height=650' width='100%' height='650' webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder='0'></iframe>`
+					}
+				}]
+			}
+		})
 	})
-})
 
 /* GET leadership page. */
 router.get('/leadership',
 	isAuthenticated,
-	async (req, res, next) => {	
+	async (req, res, next) => {
 		const url_query = req.query
 		const default_query = {
 			year: '2019',
@@ -109,115 +174,302 @@ router.get('/leadership',
 			...default_query,
 			...url_query
 		}
-		
+
 		// get the chapter names for populating the navbar
-		const chapter_names_query = `SELECT intChapterId, txtName FROM tblChapters`
+		const chapter_names_query = `SELECT id AS chapter_id, name FROM chapters`
 		// get the entire roster for populating the navbar
-		const full_roster_query = `SELECT intRosterYear, intChapter FROM tblRoster WHERE txtTitle > '' ORDER BY intRosterYear DESC`
+		const full_roster_query = `SELECT year, chapter_id FROM viewroster WHERE title > '' ORDER BY year DESC`
 		// get the roster based on url params or default values for navbar
-		const roster_query = `SELECT intId, txtTitle, intRosterYear FROM tblRoster WHERE intChapter = ${output_query.chapter} AND intRosterYear = ${output_query.year} AND txtTitle > '' ORDER BY intId`
-		
+		const roster_query = `SELECT * FROM viewroster WHERE chapter_id = ${output_query.chapter} AND year = ${output_query.year} AND title > '' ORDER BY id`
+
 		const chapter_names = await queryPromise(chapter_names_query)
 		const full_roster = await queryPromise(full_roster_query)
 		chapters = {}
-		
-		for(const index in chapter_names)
-			chapters[chapter_names[index].intChapterId] = chapter_names[index].txtName
-		
+
+		for (const index in chapter_names)
+			chapters[chapter_names[index].chapter_id] = chapter_names[index].name
+
 		// setup the roster navbar by filtering duplicates from each list and sending final object
 		roster_nav = {
-			intRosterYear: [],
-			intChapter: []
+			year: [],
+			chapter_id: []
 		}
-		
-		for(const each of full_roster){
-			roster_nav.intRosterYear.push(each.intRosterYear)
-			roster_nav.intChapter.push(each.intChapter)
+
+		for (const each of full_roster) {
+			roster_nav.year.push(each.year)
+			roster_nav.chapter_id.push(each.chapter_id)
 		}
-		
+
 		roster_nav = {
-			intRosterYear: [...new Set(roster_nav.intRosterYear)],
-			intChapter: [...new Set(roster_nav.intChapter)]
+			year: [...new Set(roster_nav.year)],
+			chapter_id: [...new Set(roster_nav.chapter_id)]
 		}
-		
+
 		roster_nav_obj = {}
-		for(i = 0; i < roster_nav.intChapter.length; i++){
-			roster_nav_obj[roster_nav.intChapter[i]] = []
-			for(j = 0; j < full_roster.length; j++)
-				if(full_roster[j].intChapter == roster_nav.intChapter[i] && !roster_nav_obj[roster_nav.intChapter[i]].includes(full_roster[j].intRosterYear))
-					roster_nav_obj[roster_nav.intChapter[i]].push(full_roster[j].intRosterYear)
+		for (i = 0; i < roster_nav.chapter_id.length; i++) {
+			roster_nav_obj[roster_nav.chapter_id[i]] = []
+			for (j = 0; j < full_roster.length; j++)
+				if (full_roster[j].chapter_id == roster_nav.chapter_id[i] && !roster_nav_obj[roster_nav.chapter_id[i]].includes(full_roster[j].year))
+					roster_nav_obj[roster_nav.chapter_id[i]].push(full_roster[j].year)
 		}
 
 		const roster = await queryPromise(roster_query)
-		
-		console.log(roster)
 
-		intIds = []
-		for(const each of roster)
-			intIds.push(each.intId)
+		ids = []
+		for (const each of roster)
+			ids.push(each.user_id)
 
-		const user_query = `SELECT * FROM tblUsers WHERE intId IN (${intIds})`
-		const users = await queryPromise(user_query)
-		
-		let data = []
-		let userMap = {}
-
-		for(const index in users)
-			userMap[users[index].intId] = users[index]
-		
-		for(const index in roster)
-			data.push({
-				...roster[index],
-				...userMap[roster[index].intId],
-			})
-			
-		for(const index in data){
-			ranking = titleToRanking(data[index].txtTitle)
-			data[index].intOrdering = ranking
+		let data = roster
+		for (const index in roster) {
+			const ranking = titleToRanking(data[index].title)
+			data[index].ordering = ranking
 		}
-		data.sort((a,b) => (a.intOrdering > b.intOrdering) ? 1 : ((b.intOrdering > a.intOrdering) ? -1 : 0))
-		
-		console.log(data)
+		data.sort((a, b) => (a.ordering > b.ordering) ? 1 : ((b.ordering > a.ordering) ? -1 : 0))
 
-		buttonBar = `<nav class="my-3 navbar navbar-expand-lg bg-dark rounded-pill bd-navbar shadow-lg"><div style="margin:auto;"><ul class="nav navbar-nav">`;
-		
+		buttonBar = `
+				<nav class="my-3 navbar navbar-expand-lg bg-dark rounded-pill bd-navbar shadow-lg"><div style="margin:auto;"><div class="btn-group">`;
+
 		Object.keys(roster_nav_obj).forEach(chapter => {
-			buttonBar += `<li class="m-3 p-2 dropdown bg-secondary rounded nav-item bd-navbar shadow-lg"><a href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false" class="dropdown-toggle dropdown-item">${chapters[chapter]}<span class="caret"></span></a><ul role="menu" class="dropdown-menu">`;
-			for(i=0; i<roster_nav_obj[chapter].length; i++){
-				buttonBar += `<li class="nav-item"><a style="text-align:center;" href="/about/leadership?chapter=${chapter}&amp;year=${roster_nav_obj[chapter][i]}" class="nav-link ">${roster_nav_obj[chapter][i]}</a></li>`;
+			buttonBar += `
+				<btn class="btn dropdown bg-secondary bd-navbar shadow-lg">
+					<a href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false" class="dropdown-toggle dropdown-item">
+						${chapters[chapter]}
+						<span class="caret"></span>
+					</a>
+					<ul role="menu" class="dropdown-menu">`;
+			for (i = 0; i < roster_nav_obj[chapter].length; i++) {
+				buttonBar += `
+						<li>
+							<a style="text-align:center;" href="/about/leadership?chapter=${chapter}&amp;year=${roster_nav_obj[chapter][i]}" class="nav-link ">
+								${roster_nav_obj[chapter][i]}
+							</a>
+						</li>`;
 			}
-			buttonBar += `</ul></li>`
+			buttonBar += `
+					</ul>
+				</btn>`
 		})
-		buttonBar += `</ul></div></nav>`
-		
-		content = [{parallax: {rem:topGap, url:'/res/stock/stage_amplifiers_01.jpg'}, hero : {title:`<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span><br>Leadership`, content:`These are the men who lead within Phi Lambda Phi.<br>${buttonBar}`}}]
-		
-		for(const elem of data)
-			content.push({
-				parallax: {
-					rem:'7',
-					url:'/res/stock/stage_amplifiers_01.jpg'
-				}, hero: {
-					title:`
-						<span class="text-muted" style="font-size:2rem;">${elem.txtTitle}</span>  
-						<br>${elem.txtGivenName}  ${elem.txtSurname}`, 
-					content:`
-						<div class="row">
-							<div class="col-md-6 col-sm-8 my-auto">
-								<img class="my-3 shadow-lg rounded-circle" style="max-width:15rem;" src="/res/default_comp/app/photos/composite/${elem.intChapter}/${elem.intRosterYear}/${elem.intId}.png"><br></div>
-							<div class="col-md-6 col-sm-8 my-auto">Enrollment<div class="lead">${elem.txtRecruitTerm} ${elem.intRecruitYear} - ${elem.intGradYear} ${elem.txtGradTerm}</div>
-							<br>Biography<br><div class="lead">${elem.txtBio}</div>
+		buttonBar += `</div></nav>
+				<div class="mx-auto col-2">
+					<div class="form-check form-switch">
+						<input class="form-check-input" type="checkbox" role="switch" id="sliderToggleAll">
+						<label class="form-check-label text-muted" for="sliderToggleAll">Toggle all sliders</label>
+					</div>
+				</div>`
+
+		content = [{ parallax: { rem: topGap, url: '/res/plp/graphics/philamb_flag.png' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span><br>Leadership`, content: `These are the men who lead within Phi Lambda Phi.<br>${buttonBar}` } }]
+
+
+		for (const elem of data) {
+			const bio = elem.bio ? `Biography<br><div class="lead">${elem.bio}</div>` : ``
+			const composite_base = `/res/default_comp/app/photos/composite`
+			const user_defined = `/${elem.chapter_id}/${elem.year}/${elem.user_id}`
+			const profile = `/res/default_profile/app/photos/profile/${elem.user_guid}.webp`
+			const composite_link = `${composite_base}${user_defined}`
+			let left = true
+
+			if (elem.user_name)
+				content.push({
+					parallax: {
+						rem: '7',
+						url: '/res/plp/graphics/philamb_flag.png'
+					}, hero: {
+						title: `
+							<span class="text-muted" style="font-size:2rem;">${elem.title}</span>  
+							<br>${elem.user_name}`,
+						content: `
+							<div class="row">
+								<div style="min-height:300px" class="mx-auto col-md-6 col-sm-8 my-auto">
+									<div style="max-width:300px" class="mx-auto img-comp-container">
+										<div class="img-comp-img">
+											<img width="300" height="300" style="object-fit: cover; overflow: hidden;" class="mx-auto rounded-circle" src="${composite_link}.webp" alt="composite photo">
+										</div>
+										<div class="img-comp-img img-comp-overlay">
+											<img width="300" height="300" style="object-fit: cover; overflow: hidden;" class="mx-auto rounded-circle" src="${profile}"  alt="current profile image">
+										</div>
+									</div>
+								</div>
+								<div class="mx-auto col-md-6 col-sm-8 my-auto">
+									Enrollment
+									<div class="lead">
+										${elem.recruit_term || ''} ${elem.recruit_year || 'NA'} - ${elem.grad_year || ''} ${elem.grad_term || 'NA'}
+									</div>
+									<br>
+									${bio}
+								</div>
+							</div>`
+					}
+				})
+		}
+
+		res.render('pages/basicText', {
+			env: req.env,
+			isAuthenticated: req.oidc.isAuthenticated(),
+			activeUser: req.activeUser,
+			title: 'Leadership',
+			page: { content: content }
+		})
+	}
+)
+
+/* GET leadership page. */
+router.get('/composites',
+	isAuthenticated,
+	async (req, res, next) => {
+		const url_query = req.query
+		const default_query = {
+			year: '2019',
+			chapter: '2'
+		}
+		const output_query = {
+			...default_query,
+			...url_query
+		}
+
+		// get the chapter names for populating the navbar
+		const chapter_names_query = `SELECT id AS chapter_id, name FROM chapters`
+		// get the entire roster for populating the navbar
+		const full_roster_query = `SELECT year, chapter_id FROM viewroster ORDER BY year DESC`
+		// get the roster based on url params or default values for navbar
+		const roster_query = `SELECT * FROM viewroster WHERE chapter_id = ${output_query.chapter} AND year = ${output_query.year} ORDER BY id`
+
+		const chapter_names = await queryPromise(chapter_names_query)
+		const full_roster = await queryPromise(full_roster_query)
+		chapters = {}
+
+		for (const index in chapter_names)
+			chapters[chapter_names[index].chapter_id] = chapter_names[index].name
+
+		// setup the roster navbar by filtering duplicates from each list and sending final object
+		roster_nav = {
+			year: [],
+			chapter_id: []
+		}
+
+		for (const each of full_roster) {
+			roster_nav.year.push(each.year)
+			roster_nav.chapter_id.push(each.chapter_id)
+		}
+
+		roster_nav = {
+			year: [...new Set(roster_nav.year)],
+			chapter_id: [...new Set(roster_nav.chapter_id)]
+		}
+
+		roster_nav_obj = {}
+		for (i = 0; i < roster_nav.chapter_id.length; i++) {
+			roster_nav_obj[roster_nav.chapter_id[i]] = []
+			for (j = 0; j < full_roster.length; j++)
+				if (full_roster[j].chapter_id == roster_nav.chapter_id[i] && !roster_nav_obj[roster_nav.chapter_id[i]].includes(full_roster[j].year))
+					roster_nav_obj[roster_nav.chapter_id[i]].push(full_roster[j].year)
+		}
+
+		const roster = await queryPromise(roster_query)
+
+		ids = []
+		for (const each of roster)
+			ids.push(each.user_id)
+
+		let data = roster
+		for (const index in roster) {
+			const ranking = titleToRanking(data[index].title)
+			data[index].ordering = ranking
+		}
+		data.sort((a, b) => (a.ordering > b.ordering) ? 1 : ((b.ordering > a.ordering) ? -1 : 0))
+
+		buttonBar = `<nav class="my-3 navbar navbar-expand-lg bg-dark rounded-pill bd-navbar shadow-lg"><div style="margin:auto;"><div class="btn-group">`;
+
+		Object.keys(roster_nav_obj).forEach(chapter => {
+			buttonBar += `
+				<btn class="btn dropdown bg-secondary bd-navbar shadow-lg">
+					<a href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false" class="dropdown-toggle dropdown-item">
+						${chapters[chapter]}
+						<span class="caret"></span>
+					</a>
+					<ul role="menu" class="dropdown-menu">`;
+			for (i = 0; i < roster_nav_obj[chapter].length; i++) {
+				buttonBar += `
+						<li>
+							<a style="text-align:center;" href="/about/composites?chapter=${chapter}&amp;year=${roster_nav_obj[chapter][i]}" class="nav-link ">
+								${roster_nav_obj[chapter][i]}
+							</a>
+						</li>`;
+			}
+			buttonBar += `
+					</ul>
+				</btn>`
+		})
+		buttonBar += `</div></nav>`
+
+		content = [{ parallax: { rem: topGap, url: '/res/plp/graphics/philamb_flag.png' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span><br>Composites`, content: `These are the men who have shared in the brotherhood of Phi Lambda Phi.<br>${buttonBar}` } }]
+
+		const images = []
+		let vp_break = false
+		let exec_break = false
+
+		for (const elem of data) {
+			const nickname = elem.user_nickname ? ` (${elem.user_nickname})` : ``
+			const name = elem.user_name ? `<h4>${elem.user_name}${nickname}</h4>` : ``
+			const title = elem.title ? `<h3>${elem.title}</h3>` : ``
+			const composite_base = `/res/default_comp/app/photos/composite`
+			const user_defined = `/${elem.chapter_id}/${elem.year}/${elem.user_id}`
+			const profile = `/res/default_profile/app/photos/profile/${elem.user_guid}.webp`
+			const composite_link = `${composite_base}${user_defined}`
+
+			if(!vp_break && !elem.title.toLowerCase().includes('pres')){
+				images.push('<br>')
+				vp_break = true
+			}
+			if(!exec_break && !elem.title) {
+				images.push('<br>')
+				exec_break = true
+			}	
+
+			images.push(`<div style="min-height:200px" class="mx-auto  col-md-3 col-sm-4 my-auto">
+							<div style="max-width:200px" class="mx-auto img-comp-container">
+								<div class="img-comp-img">
+									<img width="200" height="200" style="object-fit: cover; overflow: hidden;" class="mx-auto rounded-circle" src="${composite_link}.webp" alt="composite photo">
+								</div>
+								<div class="img-comp-img img-comp-overlay">
+									<img width="200" height="200" style="object-fit: cover; overflow: hidden;" class="mx-auto rounded-circle" src="${profile}"  alt="current profile image">
+								</div>
+							</div>
+							<div class="col">
+								${title}
+								${name}
+								<div class="lead">
+									${elem.recruit_term || ''} ${elem.recruit_year || 'NA'} - ${elem.grad_year || ''} ${elem.grad_term || 'NA'}
+								</div>
+							</div>
+						</div>`)
+				
+		}
+
+		content.push({
+			parallax: {
+				rem: '7',
+				url: '/res/plp/graphics/philamb_flag.png'
+			}, hero: {
+				title: `
+					<span class="text-muted" style="font-size:2rem;">Phi Lambda Phi</span>
+					<div class="lead">Truman State University</div>`,
+				content: `<div class="row">
+						<div class="mx-auto col-2">
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" role="switch" id="sliderToggleAll">
+								<label class="form-check-label text-muted" for="sliderToggleAll">Toggle all sliders</label>
+							</div>
 						</div>
-					</div>`
+					</div>
+					<div class="row mt-3">${images.join(' ')}</div>`
 				}
 			})
-		
-		res.render('pages/basicText', { 
-			env: req.env, 
-			isAuthenticated: req.oidc.isAuthenticated(), 
-			activeUser: req.session.activeUser,
-			title:'Leadership', 
-			page:{content: content}
+		return res.render('pages/basicText', {
+			env: req.env,
+			isAuthenticated: req.oidc.isAuthenticated(),
+			activeUser: req.activeUser,
+			title: 'Composites',
+			page: { content: content }
 		})
 	}
 )
