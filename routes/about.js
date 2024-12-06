@@ -257,7 +257,7 @@ router.get('/leadership',
 					</div>
 				</div>`
 
-		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span><br>Leadership`, content: `Our leaders at Devil\'s Dive Luthiers.<br>${buttonBar}` } }]
+		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span><br>Leadership`, content: `Our leaders at Devil\'s Dive Luthiers<br>${buttonBar}` } }]
 
 
 		for (const elem of data) {
@@ -322,7 +322,7 @@ router.get('/luthiers',
 		}
 
 		// get the chapter names for populating the navbar
-		const chapter_names_query = `SELECT id AS chapter_id, name FROM chapters`
+		const chapter_names_query = `SELECT id AS chapter_id, name, campus_address FROM chapters`
 		// get the entire roster for populating the navbar
 		const full_roster_query = `SELECT year, chapter_id FROM viewroster ORDER BY year DESC`
 		// get the roster based on url params or default values for navbar
@@ -334,6 +334,8 @@ router.get('/luthiers',
 
 		for (const index in chapter_names)
 			chapters[chapter_names[index].chapter_id] = chapter_names[index].name
+
+		const {campus_address} = chapter_names[index]
 
 		// setup the roster navbar by filtering duplicates from each list and sending final object
 		roster_nav = {
@@ -397,7 +399,7 @@ router.get('/luthiers',
 		buttonBar += `</div></nav>`
 
 		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span>
-			<br>Our Luthiers`, content: `These are the people who have participated in our history of quality craftsmanship.<br>${buttonBar}` } }]
+			<br>Our Luthiers`, content: `These are the people who have participated in our history of quality craftsmanship<br>${buttonBar}` } }]
 
 		const images = []
 		let vp_break = false
@@ -448,7 +450,7 @@ router.get('/luthiers',
 			}, hero: {
 				title: `
 					<span class="text-muted" style="font-size:2rem;">Devil's Dive Luthiers</span>
-					<div class="lead">Eagle Rock, MO / Gravette, AR</div>`,
+					<div class="lead">${campus_address}</div>`,
 				content: `<div class="row">
 						<div class="mx-auto col-2">
 							<div class="form-check form-switch">
