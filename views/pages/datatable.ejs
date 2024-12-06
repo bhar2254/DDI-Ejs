@@ -43,13 +43,13 @@
 								<% for(var i = 0; i < table.data.length; i++){ %>
 									<tr>
 										<% for(var j = 0; j < table.columns.length; j++){ %>
-											<td <% if (typeof table.data[i][table.columns[j]] === "number"){ %>class="text-center"<% } %> style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#modal_<%- table.data[i]["txtGUID"] %>">
-												<% if(table.columns[j] == "txtChapter"){ %><a href='/about/chapters?chapter=<%= table.data[i][table.columns[j]]; %>'><% } %>
+											<td <% if (typeof table.data[i][table.columns[j]] === "number"){ %>class="text-center"<% } %> style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#modal_<%- table.data[i]["guid"] %>">
+												<% if(table.columns[j] == "chapter"){ %><a href='/about/chapters?chapter=<%= table.data[i][table.columns[j]]; %>'><% } %>
 													<%= table.data[i][table.columns[j]]; %>
-												<% if(table.columns[j] == "txtChapter"){ %></a><% } %>
+												<% if(table.columns[j] == "chapter"){ %></a><% } %>
 											</td><% } %>
 										<td>
-											<input type="checkbox" name="<%= table.data[i]["txtGUID"]%>" value=1 id="select_<%- i %>"></input>
+											<input type="checkbox" name="<%= table.data[i]["guid"]%>" value=1 id="select_<%- i %>"></input>
 										</td>
 									</tr>
 								<% } %>
@@ -89,8 +89,8 @@
 		
 		generalTable.buttons().container().appendTo('#generalTable_wrapper .col-md-6:eq(0)')
 		
-		role = <%- activeUser.intRole %>
-		localId = <%- activeUser.intId %>
+		role = <%- activeUser.role %>
+		localId = <%- activeUser.id %>
 		
 		const urlParams = new URLSearchParams(window.location.search)
 		const entityId = urlParams.get('entityId')

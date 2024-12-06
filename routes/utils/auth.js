@@ -9,7 +9,7 @@ module.exports
     isAdmin
 */
 
-const {queryPromise, SQLTables} = require('./SQLUtils.js')
+const {queryPromise} = require('@bhar2254/mysql')
 const minAdmin = 2
 
 // Custom middleware for app authentication checks
@@ -17,23 +17,12 @@ const checkDBforUser= async (email) => {
     return false
 }
 
-const createUser = async (userData) => {
-    console.log(userData)
-    console.log(SQLTables)
-
-    return userData
-}
-
 const buildActiveUser = async (req, next) => {
-    if(!req.session.activeUser)
-        req.session.activeUser = {}
-	const userProfile = await queryPromise(`SELECT * FROM tblUsers WHERE txtEmail = "${req.oidc.user.email}";`)
-
-    if(userProfile.length <= 0)
-        req.session.activeUser = await createUser(req.oidc.user)
-
-	req.session.activeUser = {
-        ...req.session.activeUser,
+    if(!req.activeUser)
+        req.activeUser = {}
+	const userProfile = await queryPromise(`SELECT * FROM users WHERE email = "${req.oidc.user.email}";`)
+	req.activeUser = {
+        ...req.activeUser,
 		...req.oidc.user,
 		loginMethod: req.oidc.user.sub.split("|")[0],
 		externalId: req.oidc.user.sub.split("|")[1],
@@ -58,7 +47,7 @@ const needsAuthenticated = async (req, res, next) => {
 
 //	check auth state and redirect user if too low
 const isAdmin = (req, res, next) => {
-    if(!req.session.activeUser || req.session.activeUser.intRole < minAdmin)
+    if(!req.activeUser || req.activeUser.role < minAdmin)
         return res.sendStatus(401)	
 	return next()
 }

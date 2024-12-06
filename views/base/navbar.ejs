@@ -8,19 +8,36 @@
 	PURPOSE: 
 -->
 <% uri = env.uri %>
-<nav class="navbar navbar-expand-lg bg-plp-black-trans sticky-top shadow-lg">
+<nav class="navbar navbar-expand-lg bg-plp-dark sticky-top shadow-lg">
 	<div class="container-fluid">
 		<button class="my-1 navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<a style="margin-left:10%; position:absolute;" class="navbar-brand hide-on-shrink" href="/home"><%- env.title %></a>
 			<ul class="navbar-nav mx-auto">
+				<!-- <li class="nav-item dropdown">	
+					<a class="nav-link dropdown-toggle <% if(env.loc.substring(1,5) == "join"){ %> active <% } %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					Join</a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item <% if(env.loc == "/join/new_chapter"){ %> active <% } %>" href="/join/new_chapter">Start a Chapter</a></li>
+						<li><a class="dropdown-item <% if(env.loc == "/join/new_member"){ %> active <% } %>" href="/join/new_member">Become a Member</a></li>
+					</ul>
+				</li> -->
 				<li class="nav-item dropdown">	
 					<a class="nav-link dropdown-toggle <% if(env.loc.substring(1,6) == "about"){ %> active <% } %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-					About Us</a>
+					About Φ Λ</a>
 					<ul class="dropdown-menu">
-						<li><a class="disabled dropdown-item <% if(env.loc == "/about/history"){ %> active <% } %>" href="/about/history">Our History</a></li>
-						<li><a class="disabled dropdown-item <% if(env.loc.substring(6,17) == "/craftsmen"){ %> active <% } %>" href="/about/craftsmen">Our Craftsmen</a></li>
-						<li><a class="dropdown-item <% if(env.loc.substring(6,17) == "/faq"){ %> active <% } %>" href="/about/faq">Your Questions</a></li>
+						<!-- <li><a class="dropdown-item <% if(env.loc == "/about/chapters"){ %> active <% } %>" href="/about/chapters">Chapters</a></li>
+						<li><a class="dropdown-item <% if(env.loc == "/about/faq"){ %> active <% } %>" href="/about/faq">FAQ</a></li> -->
+						<li><a class="dropdown-item <% if(env.loc == "/about/history"){ %> active <% } %>" href="/about/history">History</a></li>
+						<li><a class="dropdown-item <% if(env.loc.substring(6,17) == "/leadership"){ %> active <% } %>" href="/about/leadership">Leadership</a></li>
+						<li><a class="dropdown-item <% if(env.loc == "/about/composites"){ %> active <% } %>" href="/about/composites">Composites</a></li>
+					</ul>
+				</li>
+				<li class="nav-item dropdown">	
+					<a class="nav-link dropdown-toggle <% if(env.loc.substring(0,4) == "/inv"){ %> active <% } %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					Involvement</a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item <% if(env.loc == "/involvement/philanthropy"){ %> active <% } %>" href="/involvement/philanthropy">Philanthropy</a></li>
 					</ul>
 				</li>
 				<li class="nav-item">
@@ -31,24 +48,29 @@
 						<a class="nav-link dropdown-toggle <% if(env.loc.substring(0,4) == "/mem"){ %> active <% } %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						Members</a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item disabled" href="#">Nothing here yet!</a></li>
+							<% if(activeUser && activeUser.role > 1){ %>
+								<li><a class="dropdown-item" target="_blank" href="/members/education">Education Binder</a></li>
+								<li><a class="dropdown-item" target="_blank" href="/members/manual">Brotherhood Manual</a></li>
+							<% } %>
 						</ul>
 					</li>
 					<% if(activeUser){ %>
-						<% if(activeUser.intRole > 2){ %>
+						<% if(activeUser.role > 2){ %>
 							<li class="nav-item dropdown">	
 								<a class="nav-link dropdown-toggle <% if(env.loc.substring(0,4) == "/adm"){ %> active <% } %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 								Admin</a>
 								<ul class="dropdown-menu">
 									<li><a class="dropdown-header dropdown-item disabled">Outreach</a></li>
 									<li><hr class="dropdown-divider"></li>
-									<li><a class="disabled dropdown-small dropdown-item <% if(env.loc == "/admin/events"){ %> active <% } %>" href="/admin/events">Events</a></li>
+									<li><a class="dropdown-small dropdown-item <% if(env.loc == "/admin/events"){ %> active <% } %>" href="/admin/events">Events</a></li>
 									<li><a class="dropdown-small dropdown-item disabled <% if(env.loc == "/admin/newsletter"){ %> active <% } %>" href="/admin/newsletter">Newsletter</a></li>
 									<li><a class="dropdown-small dropdown-item <% if(env.loc == "/admin/faq"){ %> active <% } %>" href="/admin/faq">FAQ</a></li>
 									<li><hr class="dropdown-divider"></li>
 									<li><a class="dropdown-header dropdown-item disabled">Organization</a></li>
 									<li><hr class="dropdown-divider"></li>
 									<li><a class="dropdown-small dropdown-item <% if(env.loc == "/admin/users"){ %> active <% } %>" href="/admin/users">Accounts</a></li>
+									<li><a class="dropdown-small dropdown-item disabled <% if(env.loc == "/admin/chapters"){ %> active <% } %>" href="/admin/chapters">Chapters</a></li>
+									<li><a class="dropdown-small dropdown-item <% if(env.loc == "/admin/roster"){ %> active <% } %>" href="/admin/roster">Roster</a></li>
 									<li><hr class="dropdown-divider"></li>
 									<li><a class="dropdown-item <% if(env.loc == "/admin/settings"){ %> active <% } %>" href="/admin/settings"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></li>
 								</ul>
@@ -66,17 +88,20 @@
 						</ul>
 					</li>
 					<li class="nav-item">
-						<img class="mx-1 mt-1 pt-1 rounded-circle shadow" src="/res/app/photos/profile/<%- activeUser.txtGUID %>.png" style="max-height:2rem; max-width:2rem;">
+						<img class="mx-1 mt-1 pt-1 rounded-circle shadow" src="/res/default_profile/app/photos/profile/<%- activeUser && activeUser.guid ? activeUser.guid : 'default' %>.webp" style="max-height:2rem; max-width:2rem;">
 					</li>
 					<li class="nav-item">
-						<a class="nav-link <% if(env.loc == "/users/me"){ %> active <% } %>" href="<%- uri %>users/me"><%- activeUser.given_name || "Profile" %></a>
+						<a class="nav-link <% if(env.loc == "/users/me"){ %> active <% } %>" href="/users/me"><%- activeUser.name || "Profile" %></a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="<%- uri %>clear">Log Out</a>
+						<a class="nav-link" href="/logout">Log Out</a>
 					</li>
 				<% } else { %>
+					<!-- <li class="nav-item"> -->
+						<!-- <button type="button" onclick="updateSelect();" class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#requestAccess">Request Access</button> -->
+					<!-- </li> -->
 					<li class="nav-item">
-						<a class="nav-link" href="<%- uri %>login">Log In</a>
+						<a class="nav-link" href="/login">Log In</a>
 					</li>
 				<% } %>
 			</ul>
@@ -84,3 +109,104 @@
 	</div>
 </nav>
 <main class="bg-primary-gradient">
+
+<div style="max-width:80%;" class="offcanvas offcanvas-start" tabindex="-1" id="requestAccess" aria-labelledby="requestAccessLabel">
+	<div class="offcanvas-header">
+		<h5 class="offcanvas-title" id="requestAccessExampleLabel">Request Access</h5>
+		<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+	</div>
+	<div class="offcanvas-body">
+		<div class="row">
+			<div class="col-12">
+				<div class="text-muted" style="font-size:.75rem;">Once an admin approves access, you will receive an email with your login information.
+				<br><br>We apologize for the inconvenience, but this allows us to check requests against our roster before giving access.</div>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<form class="plp-form" name="formRequestAccess" method="post" action="/auth/requestAccess" id="formRequestAccess">
+				Preferred Name<br><span class="text-xsmall text-muted">Publicly visible only to brothers</span><br>
+					<div class="lead"> 
+						<input style="max-width:47.5%" name="txtGivenName" placeholder="Given Name" type="text" required></input>
+						<input style="max-width:47.5%" name="txtSurname" placeholder="Surname" type="text" required></input>
+					</div>
+				<br>Display Name
+					<div class="lead"> 
+						<input name="nickname" placeholder="Display Name" type="text" required></input>
+					</div>
+				<br>Email
+					<div class="lead"> 
+						<input name="email" placeholder="Email" type="email" required></input>
+					</div>
+				<br>Enrollment
+				<table>
+					<tr>
+						<td class="text-muted">Recruit</td>
+						<script>							
+							STATE_array = <%- JSON.stringify(env.states) %>
+							STATES = ""
+							for(i=0; i< STATE_array.length; i++){
+								STATES += i==29 ? "<option value='"+STATE_array[i]+"' selected>"+STATE_array[i]+"</option>" : "<option value='"+STATE_array[i]+"'>"+STATE_array[i]+"</option>" ;
+							}
+							
+							TERM_array = <%- JSON.stringify(env.terms) %>
+							rTERMS = ""
+							for(i=0; i<TERM_array.length; i++){
+								rTERMS += i==3 ? "<option value='"+TERM_array[i]+"' selected>"+TERM_array[i]+"</option>" : "<option value='"+TERM_array[i]+"'>"+TERM_array[i]+"</option>"
+							}
+							gTERMS = ""
+							for(i=0; i<TERM_array.length; i++){
+								gTERMS += i==1 ? "<option value='"+TERM_array[i]+"' selected>"+TERM_array[i]+"</option>" : "<option value='"+TERM_array[i]+"'>"+TERM_array[i]+"</option>" 
+							}
+
+							function updateSelect(){
+								$("#txtState").html(STATES)
+								$("#recruit_term").html(rTERMS)
+								$("#grad_term").html(gTERMS)
+							}
+							
+							addEventListener("load", (event) => {
+								if(window.location.href.indexOf('#requestAccess') != -1 || window.location.href.indexOf('#request-access') != -1){
+									$('#requestAccess').offcanvas('show')
+									updateSelect()
+								}
+							})
+						</script>
+						<td><select class="mx-3" id="recruit_term" name="recruit_term" type="text" required></select></td>
+						<td><input style="max-width:7.5rem;" name="recruit_year" placeholder="Pledge year" type="number" required></input></td>
+					</tr>
+					<tr>
+						<td class="text-muted">Alumnus</td>
+						<td><select class="mx-3" id="grad_term" name="grad_term" type="text" required></select>
+						<td><input style="max-width:7.5rem;" name="grad_year" placeholder="Alumnus year" type="number" required></input></td>
+					</tr>
+				</table>
+				<br>Current Address <span class="text-muted" style="font-size:.85rem;">(optional)</span><br><span class="text-xsmall text-muted">Private. Used for Alumni newsletter and outreach</span><br>
+				<div class="lead">
+					<input name="txtStreetAddress" placeholder="Address" type="text"></input>
+					<br>
+					<input name="txtCity" placeholder="City" type="text"></input>, <select id="txtState" name="txtState" type="text"></select>
+					<input name="postal_code" placeholder="ZIP" type="number"></input>
+				</div>
+				<br>Employment <span class="text-muted" style="font-size:.85rem;">(optional)</span><br>
+				<div class="text-muted">
+					<input placeholder="Title" name="job_title" type="text"></input> in <input name="department" placeholder="Department" type="text" style="width:75%;"></input> at
+					<br><input name="company_name" placeholder="Company" type="text" style="width:100%;"></input><input name="id" type="number" style="display:none;"></input>
+				</div>
+				<br>Bio <span class="text-muted" style="font-size:.85rem;">(optional)</span><br><span class="text-xsmall text-muted">Publicly visible only if you were a chapter exec</span><br>
+				<div class="lead">
+					<textarea style="width:100%;" name="bio" placeholder="Biography" type="text"></textarea>
+					<br>
+				</div>
+				<br>
+				<br>
+			</form>
+			<div class="footer" style="position: fixed;height: 100px;bottom: -50px;width: 100%;">
+				<div class="btn-group" role="group" aria-label="buttons">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">Close</button>
+					<button form="formRequestAccess" type="submit" class="btn btn-primary">Submit Request</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

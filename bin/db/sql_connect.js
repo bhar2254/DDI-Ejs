@@ -11,13 +11,16 @@
 	DONT SAVE THE DATABASE PASSWORD TO GITHUB
 */	
 
-const mysql = require('mysql')
+const mysql = require('mysql2/promise')
 
-const con = mysql.createConnection({
+const pool = mysql.createPool({
 	host: process.env.DB_HOST,
 	user: process.env.DB_USER,
 	password: process.env.DB_PASS,
-	database: process.env.DB_DB
+	database: process.env.DB_DB,
+	waitForConnections: true,
+	connectionLimit: 32,
+	queueLimit: 0
 })
 
-module.exports = con
+module.exports = pool

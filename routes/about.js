@@ -33,7 +33,7 @@ router.get('/faq',
 
 		content = [{
 			parallax: {
-				rem:topGap, 
+				rem: topGap, 
 				url:'/res/stock/stage_amplifiers_01.jpg'}, 
 				hero : {
 					title:'FAQ', 
@@ -54,7 +54,7 @@ router.get('/faq',
 		}
 
 		res.render('pages/basicText', { 
-			env: req.session.env, 
+			env: req.env, 
 			isAuthenticated: req.oidc.isAuthenticated(), 
 			activeUser: req.session.activeUser,
 			title:'FAQ', 
@@ -68,7 +68,7 @@ router.get('/history',
 	isAuthenticated,
 	function(req, res, next){
 	res.render('pages/basicText', { 
-		env: req.session.env, 
+		env: req.env, 
 		isAuthenticated: req.oidc.isAuthenticated(), 
 		activeUser: req.session.activeUser,
 		title:'History', 
@@ -204,7 +204,7 @@ router.get('/leadership',
 					content:`
 						<div class="row">
 							<div class="col-md-6 col-sm-8 my-auto">
-								<img class="my-3 shadow-lg rounded-circle" style="max-width:15rem;" src="/res/app/photos/composite/${elem.intChapter}/${elem.intRosterYear}/${elem.intId}.png"><br></div>
+								<img class="my-3 shadow-lg rounded-circle" style="max-width:15rem;" src="/res/default_comp/app/photos/composite/${elem.intChapter}/${elem.intRosterYear}/${elem.intId}.png"><br></div>
 							<div class="col-md-6 col-sm-8 my-auto">Enrollment<div class="lead">${elem.txtRecruitTerm} ${elem.intRecruitYear} - ${elem.intGradYear} ${elem.txtGradTerm}</div>
 							<br>Biography<br><div class="lead">${elem.txtBio}</div>
 						</div>
@@ -213,7 +213,7 @@ router.get('/leadership',
 			})
 		
 		res.render('pages/basicText', { 
-			env: req.session.env, 
+			env: req.env, 
 			isAuthenticated: req.oidc.isAuthenticated(), 
 			activeUser: req.session.activeUser,
 			title:'Leadership', 
