@@ -228,7 +228,7 @@ router.get('/me',
 				content: [{
 					parallax: {
 						rem: profileHeadspace,
-						url: '/res/stock/stage_amplifiers_02.webp'
+						url: '/res/app/photos/defaults/default_back.webp'
 					},
 					hero: {
 						title: `<div>${activeUser.nickname || 'My Profile'}</div>
@@ -254,14 +254,14 @@ router.get('/me/roster/edit',
 			foundingYear = 1969
 			yearSpan = 1 + currentYear - 1969
 			yearsArray = Array.from({ length: yearSpan }, (_, i) => currentYear - i)
-			rosterYears = ''
+			const rosterYears = []
 
 			for (i = 0; i < yearsArray.length; i++) {
 				selected = ''
 				if (activeYear == yearsArray[i]) { selected = 'selected' }
-				rosterYears += `<option value='${yearsArray[i]}' ${selected}>${yearsArray[i]}-${yearsArray[i] + 1}</option>`
+				rosterYears.push(`<option value='${yearsArray[i]}' ${selected}>${yearsArray[i]}-${yearsArray[i] + 1}</option>`)
 			}
-			return rosterYears
+			return rosterYears.join('')
 		}
 
 		req.session.table = 'users'
@@ -269,29 +269,63 @@ router.get('/me/roster/edit',
 		const chapterQuery = `SELECT id,name FROM chapters`
 		const chapters = await queryPromise(chapterQuery)
 
-		chapterSelect = ''
-		chapter = {}
+		const chapter = {}
 		for (i = 0; i < chapters.length; i++) {
 			chapter[chapters[i].id] = chapters[i].name;
 		}
+
+		function getRosterChapters(activeChapter) {
+			const _chapterSelectOptions = []
+			Object.keys(chapter).forEach(elem => {
+				if (chapter[elem] != 'Alumni') {
+					selected = ''
+					if (activeChapter == elem) { selected = ' selected' }
+					_chapterSelectOptions.push(`<option value='${elem}'${selected}>${chapter[elem]}</option>`)
+				}
+			})
+			return _chapterSelectOptions.join('')
+		}
+
 
 		const rosterObject = new SQLObject({table: 'viewroster', key: 'user_id', id: profile.id})
 		const roster = await rosterObject.read({orderBy: 'year DESC'})
 		
 		rosterTable = ''
-		if(roster)
-			for (j = 0; j < roster.length; j++) {
-				rosterTitle = roster[j].title
-				rosterTable += `<tr id='rosterTableRow${j}'><td><select name='rosterYear${j}' class='my-1'>${getRosterYears(roster[j].year)}</select></td><td><input name='rosterPosition${j}' class='my-1' type='text' value='${roster[j].title}'></input></td><td><button onclick="removeRow(${j})" class='btn' type='button' id='rosterTableRemoveRow'><i class='fa-solid fa-trash-can'></i></button></td></tr>`;
-			}
 
+		const chapterSelectOptions = []
 		Object.keys(chapter).forEach(elem => {
 			if (chapter[elem] != 'Alumni') {
 				selected = ''
 				if (profile.chapter_id == elem) { selected = ' selected' }
-				chapterSelect += `<option value='${elem}'${selected}>${chapter[elem]}</option>`
+				chapterSelectOptions.push(`<option value='${elem}'${selected}>${chapter[elem]}</option>`)
 			}
 		})
+
+		if(roster)
+			for (j = 0; j < roster.length; j++) {
+				rosterTitle = roster[j].title
+				rosterTable += `
+					<tr id='rosterTableRow${j}'>
+						<td>
+							<select name='rosterYear${j}' class='year my-1'>
+								${getRosterYears(roster[j].year)}
+							</select>
+						</td>
+						<td>
+							<select name='rosterChapter${j}' class='chapter_id my-1'>
+								${getRosterChapters(roster[j].chapter_id)}
+							</select>
+						</td>
+						<td>
+							<input name='rosterPosition${j}' class='my-1' type='text' value='${roster[j].title}'></input>
+						</td>
+						<td>
+							<button onclick="removeRow(${j})" class='btn' type='button' id='rosterTableRemoveRow'>
+								<i class='fa-solid fa-trash-can'></i>
+							</button>
+						</td>
+					</tr>`;
+			}
 
 		res.render('pages/basicText', {
 			env: req.env,
@@ -303,7 +337,7 @@ router.get('/me/roster/edit',
 			page: {
 				content: [
 					{
-						parallax: { rem: profileHeadspace, url: '/res/stock/stage_amplifiers_02.webp' }, hero: {
+						parallax: { rem: profileHeadspace, url: '/res/app/photos/defaults/default_back.webp' }, hero: {
 							title: `<div>${req.activeUser.datum.nickname}</div>
 					<div class="btn-group" role="group" aria-label="buttons">
 						<a class="btn btn-secondary" href="/users/me">Cancel</a>
@@ -316,7 +350,7 @@ router.get('/me/roster/edit',
 							<form id="rosterEditForm" method="post" action="/users/me/roster/edit" class="plp-form">
 								<br>
 								<div class="row">
-									<div class="col my-auto">Chapter <select name="chapter_id">${chapterSelect}</select></div>
+									<div class="col my-auto">Chapter <select name="chapter_id">${chapterSelectOptions.join('')}</select></div>
 									<div class="col my-auto"><h3 class="text-muted py-3">Enrollment</h1></div>
 									<div class="col my-auto">
 										<div class="btn-group" role="group" aria-label="buttons">
@@ -330,6 +364,7 @@ router.get('/me/roster/edit',
 										<thead>
 											<tr>
 												<th class="px-3 col"><h5>Year</h5></th>
+												<th class="px-3 col"><h5>Chapter</h5></th>
 												<th class="px-3 col"><h5>Exec. Title <small class="text-muted" style="font-size:.85rem;">(blank if NA)</h5></th>
 												<th class="px-3 col"><h5>Remove</h5></th>
 											</tr>
@@ -344,6 +379,21 @@ router.get('/me/roster/edit',
 					</div>
 				</div>
 				<script>
+					let row_count = 0
+					const currentYear = new Date().getFullYear()
+					function getRosterYears(activeYear) {
+						foundingYear = 1969
+						yearSpan = 1 + currentYear - 1969
+						yearsArray = Array.from({ length: yearSpan }, (_, i) => currentYear - i)
+						const rosterYears = []
+
+						for (i = 0; i < yearsArray.length; i++) {
+							selected = ''
+							if (activeYear == yearsArray[i]) { selected = 'selected' }
+							rosterYears.push("<option value='" + yearsArray[i] + "'" +  selected + ">" + yearsArray[i] + "-" + ( yearsArray[i] + 1 ) + "</option>")
+						}
+						return rosterYears.join('')
+					}
 					function recountRows(){
 						$('#rosterTableBody tr').each(function(i, obj){
 							$(this).attr("id","rosterTableRow" + i)
@@ -353,8 +403,11 @@ router.get('/me/roster/edit',
 							
 							$(this).on('click', function(){removeRow(i)})
 						})
-						$('#rosterTableBody select').each(function(i, obj){
+						$('#rosterTableBody select #year').each(function(i, obj){
 							$(this).attr('name','rosterYear' + i)
+						})
+						$('#rosterTableBody select #chapter_id').each(function(i, obj){
+							$(this).attr('name','rosterChapter' + i)
 						})
 						$('#rosterTableBody input').each(function(i, obj){
 							$(this).attr('name','rosterPosition' + i)
@@ -362,13 +415,17 @@ router.get('/me/roster/edit',
 					}							
 					function addRow(){
 						let rowNumber = $('#rosterTableBody tr').length;
-						$('#rosterTableBody').append("<tr id='rosterTableRow"+rowNumber+"'><td><select name='rosterYear"+rowNumber+"' class='my-1'>${getRosterYears(currentYear)}</select></td><td><input name='rosterPosition"+rowNumber+"' class='my-1' type='text'></input></td><td><button class='btn' type='button' id='rosterTableRemoveRow"+rowNumber+"'><i class='fa-solid fa-trash-can'></i></button></td></tr>")
+						const activeYear = currentYear - rowNumber
+						$('#rosterTableBody').append("<tr id='rosterTableRow"+rowNumber+"'><td><select name='rosterYear"+rowNumber+"' class='year my-1'>" + getRosterYears(activeYear) + "</select></td><td><select name='rosterChapter"+rowNumber+"' class='chapter_id my-1'>${chapterSelectOptions.join('')}</select></td><td><input name='rosterPosition"+rowNumber+"' class='my-1' type='text'></input></td><td><button class='btn' type='button' id='rosterTableRemoveRow"+rowNumber+"'><i class='fa-solid fa-trash-can'></i></button></td></tr>")
 						recountRows()
 					}							
 					function removeRow(rowNumber){
 						$('#rosterTableRow' + rowNumber).remove()
-						$('#rosterTableBody select').each(function(i, obj){
+						$('#rosterTableBody select #year').each(function(i, obj){
 							$(this).attr('name','rosterYear' + i)
+						})
+						$('#rosterTableBody select #chapter_id').each(function(i, obj){
+							$(this).attr('name','rosterChapter' + i)
 						})
 						$('#rosterTableBody input').each(function(i, obj){
 							$(this).attr('name','rosterPosition' + i)
@@ -386,14 +443,16 @@ router.post('/me/roster/edit',
 	requiresAuth(), // check if user is authenticated
 	async (req, res, next) => {
 		const chapter_id = req.body.chapter_id
-		delete req.body['txtChapter']
-		const intRosterRows = Math.floor(Object.keys(req.body).length / 2)
+		console.log(req.body)
+		const intRosterRows = (Object.keys(req.body).length - 1) / 3
 		let objRoster = {}
-		let insertQuery = 'INSERT INTO roster (year,chapter_id,title,user_id) VALUES '
+		let insertQuery = 'INSERT INTO roster (year, chapter_id, title, user_id) VALUES '
+
+		console.log(req.body)
 
 		for (i = 0; i < intRosterRows; i++) {
 			objRoster[req.body['rosterYear' + i]] = req.body['rosterPosition' + i]
-			insertQuery += `(${req.body['rosterYear' + i]},${chapter_id},'${req.body['rosterPosition' + i]}',${req.activeUser.datum.id})`
+			insertQuery += `(${req.body['rosterYear' + i]},${req.body['rosterChapter' + i]},'${req.body['rosterPosition' + i]}',${req.activeUser.datum.id})`
 			if (i + 1 != intRosterRows) {
 				insertQuery += ','
 			}
@@ -402,6 +461,7 @@ router.post('/me/roster/edit',
 		const deleteQuery = `DELETE FROM roster WHERE user_id = ${req.activeUser.datum.id}`
 		await queryPromise(deleteQuery)
 		queryPromise(insertQuery)
+		req.activeUser.update({chapter_id})
 
 		res.redirect('/users/me')
 	}

@@ -29,7 +29,7 @@ router.get('/chapters',
 			{
 				parallax: {
 					rem: topGap,
-					url: '/res/stock/stage_amplifiers_02.webp'
+					url: '/res/app/photos/defaults/default_back.webp'
 				},
 				hero: {
 					title: 'Chapters',
@@ -42,7 +42,7 @@ router.get('/chapters',
 				content.push({
 					parallax: {
 						rem: '17',
-						url: '/res/stock/stage_amplifiers_02.webp'
+						url: '/res/app/photos/defaults/default_back.webp'
 					},
 					hero: {
 						title: data[i].txtName + ` Chapter`,
@@ -69,7 +69,7 @@ router.get('/chapters',
 				content.push({
 					parallax: {
 						rem: '17',
-						url: '/res/stock/stage_amplifiers_02.webp'
+						url: '/res/app/photos/defaults/default_back.webp'
 					},
 					hero: {
 						title: data[i].txtName + ` Chapter`,
@@ -80,7 +80,7 @@ router.get('/chapters',
 				content.push({
 					parallax: {
 						rem: '17',
-						url: '/res/stock/stage_amplifiers_02.webp'
+						url: '/res/app/photos/defaults/default_back.webp'
 					},
 					hero: {
 						title: data[i].txtName + ` Chapter`, content: `<div class='row'><div class='col my-auto'>${data[i].txtDesc}<br><br><b>President</b> | PLACEHOLDER <br><br><b>Local Address</b> | ${data[i].txtAddress}</div><div class='col'><div class="embed-responsive embed-responsive-1by1"><iframe src="${data[i].txtMapEmbed}" style="border:0; height:20rem; width:100%;" loading="lazy", referrerpolicy="no-referrer-when-downgrade"></iframe></div></div></div><span id='${data[i + 1].txtName}'></span>`
@@ -105,12 +105,12 @@ router.get('/faq',
 		const query = `SELECT * FROM faq`
 		data = await queryPromise(query)
 
-		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: 'FAQ', content: 'Popular questions about Devil\'s Dive and our luthier process.' } }]
+		content = [{ parallax: { rem: topGap, url: '/res/app/photos/defaults/default_back.webp' }, hero: { title: 'FAQ', content: 'Popular questions about Devil\'s Dive and our luthier process.' } }]
 		for (i = 0; i < data.length; i++) {
 			content.push({
 				parallax: {
 					rem: '10',
-					url: '/res/stock/stage_amplifiers_02.webp'
+					url: '/res/app/photos/defaults/default_back.webp'
 				},
 				hero: {
 					title: data[i].query, content: `${data[i].txtResponse}`
@@ -141,7 +141,7 @@ router.get('/history',
 				content: [{
 					parallax: {
 						rem: topGap,
-						url: '/res/stock/stage_amplifiers_02.webp'
+						url: '/res/app/photos/defaults/default_back.webp'
 					},
 					hero: {
 						title: 'History',
@@ -150,7 +150,7 @@ router.get('/history',
 				}, {
 					parallax: {
 						rem: '10',
-						url: '/res/stock/stage_amplifiers_02.webp'
+						url: '/res/app/photos/defaults/default_back.webp'
 					},
 					hero: {
 						title: 'Timeline',
@@ -257,7 +257,7 @@ router.get('/leadership',
 					</div>
 				</div>`
 
-		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span><br>Leadership`, content: `Our leaders at Devil\'s Dive Luthiers<br>${buttonBar}` } }]
+		content = [{ parallax: { rem: topGap, url: '/res/app/photos/defaults/default_back.webp' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span><br>Leadership`, content: `Our leaders at Devil\'s Dive Luthiers<br>${buttonBar}` } }]
 
 
 		for (const elem of data) {
@@ -272,7 +272,7 @@ router.get('/leadership',
 				content.push({
 					parallax: {
 						rem: '7',
-						url: '/res/stock/stage_amplifiers_02.webp'
+						url: '/res/app/photos/defaults/default_back.webp'
 					}, hero: {
 						title: `
 							<span class="text-muted" style="font-size:2rem;">${elem.title}</span>  
@@ -398,7 +398,7 @@ router.get('/luthiers',
 		})
 		buttonBar += `</div></nav>`
 
-		content = [{ parallax: { rem: topGap, url: '/res/stock/stage_amplifiers_02.webp' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span>
+		content = [{ parallax: { rem: topGap, url: '/res/app/photos/defaults/default_back.webp' }, hero: { title: `<span class="text-muted" style="font-size:2rem;">${chapters[output_query.chapter]} Chapter ${output_query.year}</span>
 			<br>Our Luthiers`, content: `These are the people who have participated in our history of quality craftsmanship<br>${buttonBar}` } }]
 
 		const images = []
@@ -446,7 +446,7 @@ router.get('/luthiers',
 		content.push({
 			parallax: {
 				rem: '7',
-				url: '/res/stock/stage_amplifiers_02.webp'
+				url: '/res/app/photos/defaults/default_back.webp'
 			}, hero: {
 				title: `
 					<span class="text-muted" style="font-size:2rem;">Devil's Dive Luthiers</span>

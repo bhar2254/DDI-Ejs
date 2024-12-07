@@ -30,7 +30,7 @@ router.get('/',
 		content = [{
 			parallax: {
 				rem:'10', 
-				url:'/res/stock/stage_amplifiers_02.webp'
+				url:'/res/app/photos/defaults/default_back.webp'
 			}, 
 			hero : {
 				title:'Upcoming Events', 
@@ -47,7 +47,7 @@ router.get('/',
 		content.push({
 			parallax: {
 				rem:'10', 
-				url:'/res/stock/stage_amplifiers_02.webp'
+				url:'/res/app/photos/defaults/default_back.webp'
 			}, 
 			hero : {
 				title:'Recent Events', 
